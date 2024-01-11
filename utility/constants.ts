@@ -2,3 +2,4 @@ import { validateName, validatePrice, validateQuantity, validateType } from "./u
 
 export const itemDetails = ['name','price','quantity','type'];
 export const itemDetailsValidationFunctions = [validateName, validatePrice,validateQuantity,validateType];
+export type Types = 'raw'|'manufactured'|'imported';

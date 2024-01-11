@@ -1,45 +1,44 @@
-export class itemsRecord {
+import { Types } from "../utility/constants";
+export class Item {
     private name: string;
     private price: number;   //original price
     private quantity: number;
-    private type: "raw"|"manufactured"|"imported";
+    private type: string;
     private salesTax: number;
     private finalPrice: number;  //price after applying tax, taxedPrice
 
-    constructor(name:string,price:number,quantity:number,type:("raw"|"manufactured"|"imported")){
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.type = type;
+    constructor(mappedValues:Map<string,(string|number)>){
+        this.name = String(mappedValues.get("name"));
+        this.price = Number(mappedValues.get("price"));
+        this.quantity = Number(mappedValues.get("quantity"));
+        this.type = String(mappedValues.get("type"));
         this.salesTax = 0;
         this.finalPrice = 0;
     }
 
     public calculateSalesTax(){
-        let taxAppliedOnItem:number;
-        let finalPrice:number;
         if(this.type == 'raw'){
-            taxAppliedOnItem = ((this.price*125)/1000);
-            finalPrice = this.price+taxAppliedOnItem;
+            this.salesTax = ((this.price*125)/1000);
+            this.finalPrice = this.price+this.salesTax;
         }
         else if(this.type == 'manufactured'){
-            taxAppliedOnItem = ((this.price*125)/1000);
-            taxAppliedOnItem += (2*(taxAppliedOnItem+this.price))/100;
-            finalPrice = this.price+taxAppliedOnItem;
+            this.salesTax = ((this.price*125)/1000);
+            this.salesTax += (2*(this.salesTax+this.price))/100;
+            this.finalPrice = this.price+this.salesTax;
         }
         else{
             let surcharge:number;
-            taxAppliedOnItem = (this.price*10)/100;
-            finalPrice = this.price+taxAppliedOnItem;
-            if(finalPrice<=100) surcharge = 5;
-            else if(finalPrice>=100 && finalPrice<=200) surcharge=10;
-            else surcharge = (5*finalPrice)/100;
+            this.salesTax = (this.price*10)/100;
+            this.finalPrice = this.price+this.salesTax;
+            if(this.finalPrice<=100) surcharge = 5;
+            else if(this.finalPrice>=100 && this.finalPrice<=200) surcharge=10;
+            else surcharge = (5*this.finalPrice)/100;
 
-            taxAppliedOnItem+=surcharge
-            finalPrice+=surcharge;
+            this.salesTax+=surcharge
+            this.finalPrice+=surcharge;
         }
-        this.salesTax = taxAppliedOnItem*this.quantity;
-        this.finalPrice = finalPrice*this.quantity;
+        this.salesTax *= this.quantity;
+        this.finalPrice *= this.quantity;
     }
 
     public displayAllDetails(){
