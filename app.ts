@@ -1,46 +1,56 @@
 import promptSync from "prompt-sync";
 import { itemsRecord } from "./models/itemsRecord";
-import { validateItemValues } from "./utility/utils";
+import { validateName, validatePrice, validateQuantity, validateType, validateUserInput } from "./utility/utils";
 import { itemDetails, itemDetailsValidationFunctions } from "./utility/constants";
-import { calculateSalesTaxForItem } from "./utility/Tax_Calculator";
 
 const prompt = promptSync();
 let allItemsCollection:itemsRecord[] = [];
 
-function main(userInput:string){
-    let itemValues = userInput.split(",")
-    validateItemValues(itemValues);
 
-    let item:{ [property: string] : string | number | Error } = {name:"",price:0,quantity:0,type: "raw",salesTax: 0,finalPrice: 0};
-    let flag:boolean = true;
-    
-    // mapping the valid input values to its properties
+
+function processUserInput(input:string[]){
+    console.log(input);
+    if(input.length != 10) return Error("Kindly enter all arguments correctly ");
+    let i:number = 0;
+    let item:any = {};
     try{
-        for(let i = 0; i<4; i++){
-            try{
-                let finalValue = itemDetailsValidationFunctions[i](itemValues[i]);
-                if(finalValue) item[itemDetails[i]] = finalValue;
-            }
-            catch(error:any){
-                console.log(error.message);
-                flag = false;
-                break;
-            }
+        for(i = 2; i<10; i+=2){
+            if(i == 2 && input[i] == '-name' && item.name==null) item.name = input[i+1];
+            else if(input[i] == '-price' && item.price==null) item.price = input[i+1];
+            else if(input[i] == '-quantity' && item.quantity==null) item.quantity = input[i+1];
+            else if(input[i] == '-type' && item.type==null) item.type = input[i+1];
+            else throw Error("Kindly enter name first and do not repeat any property");
         }
-        if(flag){
-            // Calculate Tax for the item
-            const FinalItem = calculateSalesTaxForItem(item);
+    }
+    catch(error:any){
+        console.log(error.message);
+        return;
+    }
+    validateAndCreateItem(item);
+    takeInputForNewItem();
+}
 
-            //print the values
-            console.log(`The details for item you have entered are as follows : \n1. Name : ${item.name}\n2. Price : ${item.price}\n3. Quantity : ${item.quantity}\n4. Type : ${item.type}\n5. Calculated Sales Tax for this item : ${item.salesTax}\n6. Final Price of item : ${item.finalPrice}`);
-            while(true){
-                let input:String = prompt("Would you like to save this item? (Y/N)");
-                if(input == "Y" || input == "y"){
-                    allItemsCollection.push(FinalItem);
-                    break;
-                }
-                else if(input == "N" || input == "n") break;
+
+
+
+function validateAndCreateItem(userInput:any){
+    // validating the input values and creating item object
+    try{
+        let name:string = validateName(userInput.name);
+        let price:number = validatePrice(userInput.price);
+        let quantity:number = validateQuantity(userInput.quantity);
+        let type:('raw'|'manufactured'|'imported') = validateType(userInput.type);
+
+        const finalItem = new itemsRecord(name,price,quantity,type);
+        finalItem.calculateSalesTax();
+        finalItem.displayAllDetails();
+        while(true){
+            const inputChoice = prompt("Would you like to save this item (y/n) : ");
+            if(inputChoice == "Y" || inputChoice == "y"){
+                allItemsCollection = [...allItemsCollection,finalItem];
+                return;
             }
+            else if(inputChoice == "N" || inputChoice == "n") return;
         }
     }
     catch(error:any){
@@ -50,23 +60,23 @@ function main(userInput:string){
 }
 
 
-
 // calling the main function
-while(true){
-    let flag = true;
-    const userInput:string = prompt("Enter your item Name, Price, Quantity and Type (Input must be comma seperated): ");
-    main(userInput);
-    //Ask user weather he wants to add another item or not
+function takeInputForNewItem(){
     while(true){
         let input:String = prompt("Do you want to enter details of any other item (y/n) : ");
         if(input == "Y" || input == "y") break;
-        else if(input == "N" || input == "n"){
-            flag = false;
-            break;
-        }
+        else if(input == "N" || input == "n") return;
+        else continue;
     }
-    if(flag == false) break;
+    let userInput:any = prompt("Enter your item -name -price -quantity and -type  (Name must be first) ");
+    userInput = validateUserInput(userInput);
+    processUserInput([" "," ",...userInput]);
 }
+
+
+
+// take user input from command line and process it
+processUserInput(process.argv)
 
 // asking user weather he wants to view all items list or not
 while(true){
@@ -78,3 +88,8 @@ while(true){
     else if (input == "N" || input == "n") break;
     else continue;
 }
+
+
+// process.argv.forEach(function (val, index, array) {
+//     console.log(index + ': ' + val);
+// });

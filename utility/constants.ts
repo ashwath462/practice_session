@@ -1,4 +1,4 @@
-import { verifyName, verifyPrice, verifyQuantity, validateItemValues, validateType } from "./utils";
+import { validateName, validatePrice, validateQuantity, validateType } from "./utils";
 
 export const itemDetails = ['name','price','quantity','type'];
-export const itemDetailsValidationFunctions = [verifyName, verifyPrice,verifyQuantity,validateType];
+export const itemDetailsValidationFunctions = [validateName, validatePrice,validateQuantity,validateType];
