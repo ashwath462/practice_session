@@ -11,7 +11,7 @@ export function mapInputDetails(input:string[]){
             if(input[i][0] == '-') key.push(input[i].slice(1));
             else value.push(input[i]);
         }
-        if(key.length>4 || value.length>4) throw new Error('Kindly enter all details in correct format!');
+        if(key.length!=4 || value.length!=4) throw new Error('Kindly enter all details in correct format!');
     }
     catch(error:any){
         console.log(error.message);

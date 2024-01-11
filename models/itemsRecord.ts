@@ -38,7 +38,7 @@ export class Item {
             this.finalPrice+=surcharge;
         }
         this.salesTax *= this.quantity;
-        this.finalPrice *= this.quantity;
+        return this.finalPrice *= this.quantity;
     }
 
     public displayAllDetails(){
