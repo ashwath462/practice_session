@@ -1,4 +1,4 @@
-import { Item } from '../models/itemsRecord';
+import { ItemFactory } from '../models/itemsRecord';
 import { itemDetails, itemDetailsValidationFunctions } from './constants';
 
 export function mapInputDetails(input:string[]){
@@ -7,9 +7,11 @@ export function mapInputDetails(input:string[]){
     let value:string[] = [];
     try{
         if(input.length != 8 || input[0]!="-name") throw new Error("Kindly enter all arguments correctly. -name must be entered first");
-        for(i = 0; i<8; i++){
-            if(input[i][0] == '-') key.push(input[i].slice(1));
-            else value.push(input[i]);
+        for(i = 0; i<8; i+=2){
+            if(input[i][0] == '-'){
+                key.push(input[i].slice(1));
+                value.push(input[i+1]);
+            }
         }
         if(key.length!=4 || value.length!=4) throw new Error('Kindly enter all details in correct format!');
     }
@@ -46,9 +48,7 @@ export function validateAndCreateItem(userInput:any){
             userInput.set(key,value);
         }
 
-        const finalItem = new Item(userInput);
-        finalItem.calculateSalesTax();
-        return finalItem;
+        return ItemFactory.createItem(userInput.get('name'),userInput.get('price'),userInput.get('quantity'),userInput.get('type'));
     }
     catch(error:any){
         console.log(error.message);

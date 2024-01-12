@@ -65,10 +65,8 @@ test.fails('type validation fail', () => {
 })
 
 test('map input details', () => {
-    expect(mapInputDetails(['-name','-price','-type','-quantity','itemName','100','raw','12'])).toStrictEqual(new Map<string,string>([['name','itemName'],['price','100'],['type', 'raw'],['quantity','12']]));
-    expect(mapInputDetails(['-name','-type','-price','-quantity','aaa','manufactured','200','12'])).toStrictEqual(new Map<string,string>([['name','aaa'],['type', 'manufactured'],['price','200'],['quantity','12']]));
-    expect(mapInputDetails(['-name','-price','-type','-quantity','bbb','100','raw','12'])).toStrictEqual(new Map<string,string>([['name','bbb'],['price','100'],['type', 'raw'],['quantity','12']]));
-    expect(mapInputDetails(['-name','-quantity','-price','-type','asdf','100','1000','imported'])).toStrictEqual(new Map<string,string>([['name','asdf'],['quantity','100'],['price','1000'],['type', 'imported']]));
+    expect(mapInputDetails(['-name','itemName','-type','raw','-price','100','-quantity','12'])).toStrictEqual(new Map<string,string>([['name','itemName'],['type', 'raw'],['price','100'],['quantity','12']]));
+    expect(mapInputDetails(['-name','tea','-price','245','-type','manufactured','-quantity','12'])).toStrictEqual(new Map<string,string>([['name','tea'],['price','245'],['type', 'manufactured'],['quantity','12']]));
 })
 
 test.fails('map input details fails', () => {
