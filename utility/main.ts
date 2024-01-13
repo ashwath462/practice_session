@@ -39,19 +39,3 @@ export function processUserInput(inputValues : string){
     }
     throw new Error("Kindly enter valid details");
 }
-
-export function validateAndCreateItem(userInput:any){
-    try{
-        for (let [key, value] of userInput) {
-            let index:number = itemDetails.indexOf(key);
-            value = itemDetailsValidationFunctions[index](value);
-            userInput.set(key,value);
-        }
-
-        return ItemFactory.createItem(userInput.get('name'),userInput.get('price'),userInput.get('quantity'),userInput.get('type'));
-    }
-    catch(error:any){
-        console.log(error.message);
-        return;
-    }
-}

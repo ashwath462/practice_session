@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest';
-import { Item } from '../../models/itemsRecord';
+import { Item, ItemFactory } from '../../models/itemsRecord';
 import { validateName, validatePrice, validateQuantity, validateType } from '../../utility/utils';
-import { mapInputDetails, processUserInput, validateAndCreateItem } from '../../utility/main';
+import { mapInputDetails, processUserInput } from '../../utility/main';
 test("Testing Validate Name" , () => {
     expect(validateName("ashwath")).toBe("Ashwath");
     expect(validateName("ash")).toBe("Ash");
@@ -92,45 +92,43 @@ test.fails('process user input fails', () => {
 })
 
 test('validate and create Item', () => {
-    let value:any = new Item(new Map<string, (string|number)>([ ["name","Ash"],["price",10],["quantity",100],["type","raw"]]) );
+    let value:any = ItemFactory.checkType("Ash",10,100,"raw");
     value.calculateSalesTax();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name","ash"],["price","10"],["quantity","100"],["type","raw"] ]))).toStrictEqual(value);
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name","ash"],["price","10"],["quantity","100"],["type","raw"] ]))).toStrictEqual(value);
 
-
-    value = new Item(new Map<string, (string|number)>([ ["name","Item1"],["price",20],["quantity",50],["type","imported"]]) );
+    value = ItemFactory.checkType("Item1",20,50,"imported");
     value.calculateSalesTax();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name","item1"],["price","20"],["quantity","50"],["type","imported"] ]))).toStrictEqual(value);
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name","item1"],["price","20"],["quantity","50"],["type","imported"] ]))).toStrictEqual(value);
 
-
-    value = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",200],["quantity",25],["type","manufactured"]]) );
+    value = ItemFactory.checkType("Football",200,25,"manufactured");
     value.calculateSalesTax();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name","football"],["price","200"],["quantity","25"],["type","manufactured"] ]))).toStrictEqual(value);
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name","football"],["price","200"],["quantity","25"],["type","manufactured"] ]))).toStrictEqual(value);
 
 })
 
 test.fails('validate and create item fails', () => {
-    expect(validateAndCreateItem(new Map<string,string>([ ["name","football"],["price","200"],["quantity","125"],["type","manufactured"] ]))).toThrowError();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name","item2"],["price","200"],["quantity","125"],["type","manufacture"] ]))).toThrowError();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name","item3"],["price","200"],["quantity","125"],["type","raw"] ]))).toThrowError();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name"," "],["price","200"],["quantity","125"],["type","raw"] ]))).toThrowError();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name"," "],["price","abc"],["quantity","125"],["type","raw"] ]))).toThrowError();
-    expect(validateAndCreateItem(new Map<string,string>([ ["name"," "],["price","abc"],["quantity","avg"],["type","imported"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name","football"],["price","200"],["quantity","125"],["type","manufactured"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name","item2"],["price","200"],["quantity","125"],["type","manufacture"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name","item3"],["price","200"],["quantity","125"],["type","raw"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name"," "],["price","200"],["quantity","125"],["type","raw"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name"," "],["price","abc"],["quantity","125"],["type","raw"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string,string>([ ["name"," "],["price","abc"],["quantity","avg"],["type","imported"] ]))).toThrowError();
 })
 
 test('validate sales tax calculator', () => {
-    let value:any = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",200],["quantity",25],["type","raw"]]) );
-    expect(value.calculateSalesTax()).toBe(5625); value.displayAllDetails();
-    value = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",100],["quantity",1],["type","raw"]]) );
-    expect(value.calculateSalesTax()).toBe(112.5); value.displayAllDetails();
-    value = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",67],["quantity",12],["type","raw"]]) );
-    expect(value.calculateSalesTax()).toBe(904.5); value.displayAllDetails();
+    let value:any = ItemFactory.checkType("football",200,25,"raw");
+    expect(value.calculateSalesTax()).toBe(5625);
+    value = ItemFactory.checkType("football",100,1,"raw");
+    expect(value.calculateSalesTax()).toBe(112.5);
+    value = ItemFactory.checkType("football",67,12,"raw");
+    expect(value.calculateSalesTax()).toBe(904.5);
 
-    value = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",10],["quantity",100],["type","manufactured"]]) );
-    expect(value.calculateSalesTax()).toBe(1147.5); value.displayAllDetails();
+    value = ItemFactory.checkType("football",10,100,"manufactured");
+    expect(value.calculateSalesTax()).toBe(1147.5);
 
-    value = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",500],["quantity",15],["type","imported"]]) );
-    expect(value.calculateSalesTax()).toBe(8662.5); value.displayAllDetails();
+    value = ItemFactory.checkType("football",500,15,"imported");
+    expect(value.calculateSalesTax()).toBe(8662.5);
 
-    value = new Item(new Map<string, (string|number)>([ ["name","Football"],["price",100],["quantity",10],["type","imported"]]) );
-    expect(value.calculateSalesTax()).toBe(1200); value.displayAllDetails();
+    value = ItemFactory.checkType("football",100,10,"imported");
+    expect(value.calculateSalesTax()).toBe(1200);
 })

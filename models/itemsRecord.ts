@@ -1,11 +1,11 @@
 import promptSync from "prompt-sync";
 const prompt = promptSync();
+import { itemDetails, itemDetailsValidationFunctions } from "../utility/constants";
 
 export abstract class Item {
     protected name: string;
     protected price: number;   //original price
     protected quantity: number;
-    protected type: string;
     protected salesTax: number;
     protected finalPrice: number;  //price after applying tax, taxedPrice
 
@@ -17,17 +17,16 @@ export abstract class Item {
         this.finalPrice = 0;
     }
 
-    public abstract calculateSalesTax();
+    public abstract calculateSalesTax():number;
 
-    public displayAllDetails(){
-        console.log(`The details for this you have entered are as follows : \n1. Name : ${this.name}\n2. Price : ${this.price}\n3. Quantity : ${this.quantity}\n4. Type : ${this.type}\n5. Calculated Sales Tax for this this : ${this.salesTax}\n6. Final Price of this : ${this.finalPrice}`);
-    }
 }
 
 // Type = Raw
 class RawItem extends Item {
+    protected type:string;
     constructor(name: string,price: number, quantity:number) {
         super(name,price,quantity);
+        this.type = "raw";
     }
 
     public calculateSalesTax() {
@@ -35,27 +34,36 @@ class RawItem extends Item {
         this.finalPrice = this.price+this.salesTax;
         this.salesTax *= this.quantity;
         this.finalPrice *= this.quantity;
+
+        return this.finalPrice;
     }
 }
 
 // Type = Manufactured
 class ManufacturedItem extends Item {
+    protected type:string;
     constructor(name:string, price: number, quantity: number) {
         super(name,price,quantity);
+        this.type = "manufactured";
     }
 
     public calculateSalesTax() {
-        this.salesTax = (this.price * 0.125) + (0.02 * (this.price + this.salesTax));
+        this.salesTax = (this.price * 0.125);
+        this.salesTax += (0.02 * (this.price + this.salesTax));
         this.finalPrice = this.price + this.salesTax;
         this.salesTax *= this.quantity;
         this.finalPrice *= this.quantity;
+
+        return this.finalPrice;
     }   
 }
 
 // Type = Imported
 class Imported extends Item {
+    protected type:string;
     constructor(name:string, price:number, quantity: number) {
         super(name,price,quantity);
+        this.type = "imported";
     }
 
     public calculateSalesTax() {
@@ -72,6 +80,8 @@ class Imported extends Item {
 
         this.salesTax *= this.quantity;
         this.finalPrice *= this.quantity;
+
+        return this.finalPrice;
     }
 }
 
@@ -79,8 +89,7 @@ class Imported extends Item {
 // Factory Item
 export class ItemFactory {
     protected static allItemsList:Item[] = [];
-
-    public static createItem(name:string, price:number, quantity:number, type:string){
+    public static checkType(name:string, price:number, quantity:number, type:string):any{
         switch (type) {
             case 'raw':
                     return new RawItem(name,price,quantity);
@@ -93,6 +102,24 @@ export class ItemFactory {
         }
     }
 
+    public static createItem(userInput:any){
+        try{
+            for (let [key, value] of userInput) {
+                let index:number = itemDetails.indexOf(key);
+                value = itemDetailsValidationFunctions[index](value);
+                userInput.set(key,value);
+            }
+    
+            const item:any = this.checkType(userInput.get('name'),userInput.get('price'),userInput.get('quantity'),userInput.get('type'));
+            item.calculateSalesTax();
+            return item;
+        }
+        catch(error:any){
+            console.log(error.message);
+            return;
+        }
+    }
+
     public static saveItem(item: Item){
         console.log(item);
         while(true){
@@ -102,6 +129,18 @@ export class ItemFactory {
                 break;
             }
             else if(inputChoice == "N" || inputChoice == "n") break;
+        }
+    }
+
+    public static displayAllItems(){
+        while(true){
+            const input = prompt("Would you like to view all item list (y/n) : ")
+            if(input == "Y" || input == "y"){
+                console.log(this.allItemsList);
+                break;
+            }
+            else if (input == "N" || input == "n") break;
+            else continue;
         }
     }
 }

@@ -1,40 +1,21 @@
 import promptSync from "prompt-sync";
-import { Types } from "./utility/constants";
-import { Item } from "./models/itemsRecord";
-import {mapInputDetails, processUserInput, validateAndCreateItem} from "./utility/main";
+import { Types, itemDetails } from "./utility/constants";
+import { Item, ItemFactory } from "./models/itemsRecord";
+import {mapInputDetails, processUserInput} from "./utility/main";
+import { factory } from "typescript";
 const prompt = promptSync();
 let allItemsCollection:Item[] = [];
 
 
 // Driver Code
 let item:any = mapInputDetails(process.argv.slice(2));
-item = validateAndCreateItem(item);
-saveItem(item);
+item = ItemFactory.createItem(item);
+ItemFactory.saveItem(item);
+takeInputForNewItem();
+ItemFactory.displayAllItems()
 
-while(true){
-    const input = prompt("Would you like to view all item list (y/n) : ")
-    if(input == "Y" || input == "y"){
-        console.log(allItemsCollection);
-        break;
-    }
-    else if (input == "N" || input == "n") break;
-    else continue;
-}
 
 // Functions 
-function saveItem(item:any){
-    console.log(item);
-    while(true){
-        const inputChoice = prompt("Would you like to save this item (y/n) : ");
-        if(inputChoice == "Y" || inputChoice == "y"){
-            allItemsCollection = [...allItemsCollection,item];
-            break;
-        }
-        else if(inputChoice == "N" || inputChoice == "n") break;
-    }
-    takeInputForNewItem();
-}
-
 function takeInputForNewItem(){
     while(true){
         let input:string = prompt("Do you want to enter details of any other item (y/n) : ");
@@ -45,6 +26,7 @@ function takeInputForNewItem(){
     let userInput:any = prompt("Enter your item -name -price -quantity and -type  (Name must be first) ");
     userInput = processUserInput(userInput);
     let item:any = mapInputDetails(userInput);
-    item = validateAndCreateItem(item);
-    saveItem(item);
+    item = ItemFactory.createItem(item);
+    ItemFactory.saveItem(item);
+    takeInputForNewItem();
 }
