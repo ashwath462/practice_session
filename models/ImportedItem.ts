@@ -2,8 +2,8 @@ import { HIGH_SURCHARGE, IMPORT_DUTY, LOW_SURCHARGE, MID_SURCHARGE } from "../ut
 import { Item } from "./Item";
 
 export class ImportedItem extends Item {
-    constructor(name:string, price:number, quantity: number) {
-        super(name,price,quantity);
+    constructor(name: string, price: number, quantity: number) {
+        super(name, price, quantity);
         this.type = "imported";
     }
 

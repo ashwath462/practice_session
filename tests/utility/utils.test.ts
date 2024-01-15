@@ -1,10 +1,10 @@
-import {expect, test} from 'vitest';
+import { expect, test } from 'vitest';
 import { ItemFactory } from '../../models/ItemFactory';
 import { mapInputDetails, processUserInput, itemDetailsValidationFunctions } from '../../utility/utils';
 import { RawItem } from '../../models/RawItem';
 import { ImportedItem } from '../../models/ImportedItem';
 import { ManufacturedItem } from '../../models/ManufacturedItem';
-test("Testing Validate Name" , () => {
+test("Testing Validate Name", () => {
     expect(itemDetailsValidationFunctions["name"]("ashwath")).toBe("Ashwath");
     expect(itemDetailsValidationFunctions["name"]("ash")).toBe("Ash");
     expect(itemDetailsValidationFunctions["name"]("1ash")).toBe("1ash");
@@ -37,7 +37,7 @@ test.fails('price validation fail', () => {
     expect(itemDetailsValidationFunctions["price"]("0")).toThrowError();
 })
 
-test('Testing validate Quantity',() => {
+test('Testing validate Quantity', () => {
     expect(itemDetailsValidationFunctions["quantity"]("1")).toBe(1);
     expect(itemDetailsValidationFunctions["quantity"]("10")).toBe(10);
     expect(itemDetailsValidationFunctions["quantity"]("100")).toBe(100);
@@ -67,24 +67,24 @@ test.fails('type validation fail', () => {
 })
 
 test('map input details', () => {
-    expect(mapInputDetails(['-name','itemName','-type','raw','-price','100','-quantity','12'])).toStrictEqual(new Map<string,any>([['name','Itemname'],['type', 'raw'],['price',100],['quantity',12]]));
-    expect(mapInputDetails(['-name','tea','-price','245','-type','manufactured','-quantity','12'])).toStrictEqual(new Map<string,any>([['name','Tea'],['price',245],['type', 'manufactured'],['quantity',12]]));
+    expect(mapInputDetails(['-name', 'itemName', '-type', 'raw', '-price', '100', '-quantity', '12'])).toStrictEqual(new Map<string, any>([['name', 'Itemname'], ['type', 'raw'], ['price', 100], ['quantity', 12]]));
+    expect(mapInputDetails(['-name', 'tea', '-price', '245', '-type', 'manufactured', '-quantity', '12'])).toStrictEqual(new Map<string, any>([['name', 'Tea'], ['price', 245], ['type', 'manufactured'], ['quantity', 12]]));
 })
 
 test.fails('map input details fails', () => {
-    expect(mapInputDetails(['-name','-price','-type','-quantity','itemName','100','raw'])).toThrowError();
-    expect(mapInputDetails(['-price','-name','-type','-quantity','itemName','100','raw'])).toThrowError();
-    expect(mapInputDetails(['-name','-price','-type','-quantity','itemName','100','raw','asdf','90'])).toThrowError();
-    expect(mapInputDetails(['-name','-price','-type','-quantity','-itemName','-100','raw','90'])).toThrowError();
-    expect(mapInputDetails(['-name','-price','-type','-quantity','itemName','100','raw','90'])).toThrowError();
+    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrowError();
+    expect(mapInputDetails(['-price', '-name', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrowError();
+    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', 'asdf', '90'])).toThrowError();
+    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', '-itemName', '-100', 'raw', '90'])).toThrowError();
+    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', '90'])).toThrowError();
 })
 
 test('process user input', () => {
-    expect(processUserInput("  -name item1 -price 1000      -quantity 10 -type imported")).toStrictEqual(new Map<string,any>([ ['name', 'Item1'],['price',1000],['quantity', 10],['type', 'imported'] ]));
-    expect(processUserInput("  -name bag     -quantity 10000  -price 250  -type manufactured")).toStrictEqual(new Map<string,any>([ ['name', 'Bag'],['price',250],['quantity', 10000],['type', 'manufactured'] ]));
-    expect(processUserInput("  -name shoe -type raw -price 2500       -quantity 22 ")).toStrictEqual(new Map<string,any>([ ['name', 'Shoe'],['price',2500],['quantity', 22],['type', 'raw'] ]));
-    expect(processUserInput("  -name tie -price 200       -quantity 350 -type manufactured")).toStrictEqual(new Map<string,any>([ ['name', 'Tie'],['price',200],['quantity', 350],['type', 'manufactured'] ]));
-    expect(processUserInput("  -name box -price 10       -quantity 500 -type raw")).toStrictEqual(new Map<string,any>([ ['name', 'Box'],['price',10],['quantity', 500],['type', 'raw'] ]));
+    expect(processUserInput("  -name item1 -price 1000      -quantity 10 -type imported")).toStrictEqual(new Map<string, any>([['name', 'Item1'], ['price', 1000], ['quantity', 10], ['type', 'imported']]));
+    expect(processUserInput("  -name bag     -quantity 10000  -price 250  -type manufactured")).toStrictEqual(new Map<string, any>([['name', 'Bag'], ['price', 250], ['quantity', 10000], ['type', 'manufactured']]));
+    expect(processUserInput("  -name shoe -type raw -price 2500       -quantity 22 ")).toStrictEqual(new Map<string, any>([['name', 'Shoe'], ['price', 2500], ['quantity', 22], ['type', 'raw']]));
+    expect(processUserInput("  -name tie -price 200       -quantity 350 -type manufactured")).toStrictEqual(new Map<string, any>([['name', 'Tie'], ['price', 200], ['quantity', 350], ['type', 'manufactured']]));
+    expect(processUserInput("  -name box -price 10       -quantity 500 -type raw")).toStrictEqual(new Map<string, any>([['name', 'Box'], ['price', 10], ['quantity', 500], ['type', 'raw']]));
 })
 
 test.fails('process user input fails', () => {
@@ -94,25 +94,25 @@ test.fails('process user input fails', () => {
 })
 
 test('Create Item', () => {
-    let value = new RawItem("Ash",10,100);
+    let value = new RawItem("Ash", 10, 100);
     value.calculateSalesTax();
-    expect(ItemFactory.createItem(new Map<string,any>([ ["name","Ash"],["price",10],["quantity",100],["type","raw"] ]))).toStrictEqual(value);
+    expect(ItemFactory.createItem(new Map<string, any>([["name", "Ash"], ["price", 10], ["quantity", 100], ["type", "raw"]]))).toStrictEqual(value);
 
-    value = new ImportedItem("Item1",20,50);
+    value = new ImportedItem("Item1", 20, 50);
     value.calculateSalesTax();
-    expect(ItemFactory.createItem(new Map<string,any>([ ["name","Item1"],["price",20],["quantity",50],["type","imported"] ]))).toStrictEqual(value);
+    expect(ItemFactory.createItem(new Map<string, any>([["name", "Item1"], ["price", 20], ["quantity", 50], ["type", "imported"]]))).toStrictEqual(value);
 
-    value = new ManufacturedItem("Football",200,25);
+    value = new ManufacturedItem("Football", 200, 25);
     value.calculateSalesTax();
-    expect(ItemFactory.createItem(new Map<string,any>([ ["name","Football"],["price",200],["quantity",25],["type","manufactured"] ]))).toStrictEqual(value);
+    expect(ItemFactory.createItem(new Map<string, any>([["name", "Football"], ["price", 200], ["quantity", 25], ["type", "manufactured"]]))).toStrictEqual(value);
 
 })
 
 test.fails('Create item fails', () => {
-    expect(ItemFactory.createItem(new Map<string,string>([ ["name","football"],["price","200"],["quantity","125"],["type","manufactured"] ]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string,string>([ ["name","item2"],["price","200"],["quantity","125"],["type","manufacture"] ]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string,string>([ ["name","item3"],["price","200"],["quantity","125"],["type","raw"] ]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string,string>([ ["name"," "],["price","200"],["quantity","125"],["type","raw"] ]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string,string>([ ["name"," "],["price","abc"],["quantity","125"],["type","raw"] ]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string,string>([ ["name"," "],["price","abc"],["quantity","avg"],["type","imported"] ]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string, string>([["name", "football"], ["price", "200"], ["quantity", "125"], ["type", "manufactured"]]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string, string>([["name", "item2"], ["price", "200"], ["quantity", "125"], ["type", "manufacture"]]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string, string>([["name", "item3"], ["price", "200"], ["quantity", "125"], ["type", "raw"]]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string, string>([["name", " "], ["price", "200"], ["quantity", "125"], ["type", "raw"]]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string, string>([["name", " "], ["price", "abc"], ["quantity", "125"], ["type", "raw"]]))).toThrowError();
+    expect(ItemFactory.createItem(new Map<string, string>([["name", " "], ["price", "abc"], ["quantity", "avg"], ["type", "imported"]]))).toThrowError();
 })

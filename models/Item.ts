@@ -4,9 +4,9 @@ export abstract class Item {
     protected quantity: number;
     protected salesTax: number;
     protected finalPrice: number;  //price after applying tax, taxedPrice
-    protected type : string;
+    protected type: string;
 
-    constructor(name: string, price: number, quantity: number){
+    constructor(name: string, price: number, quantity: number) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -15,6 +15,6 @@ export abstract class Item {
         this.type = "";
     }
 
-    public abstract calculateSalesTax():number;
+    public abstract calculateSalesTax(): number;
 
 }

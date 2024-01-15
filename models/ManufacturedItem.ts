@@ -2,8 +2,8 @@ import { MANUFACTURING_TAX, SALES_TAX } from "../utility/constants";
 import { Item } from "./Item";
 
 export class ManufacturedItem extends Item {
-    constructor(name:string, price: number, quantity: number) {
-        super(name,price,quantity);
+    constructor(name: string, price: number, quantity: number) {
+        super(name, price, quantity);
         this.type = "manufactured";
     }
 
@@ -15,5 +15,5 @@ export class ManufacturedItem extends Item {
         this.finalPrice *= this.quantity;
 
         return this.finalPrice;
-    }   
+    }
 }

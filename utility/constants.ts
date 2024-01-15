@@ -1,4 +1,4 @@
-export type Types = 'raw'|'manufactured'|'imported';
+export type Types = 'raw' | 'manufactured' | 'imported';
 
 export const SALES_TAX = 0.125;
 export const MANUFACTURING_TAX = 0.02;
