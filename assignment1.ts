@@ -1,18 +1,17 @@
 import promptSync from "prompt-sync";
-import { Types, itemDetails } from "./utility/constants";
-import { Item, ItemFactory } from "./models/itemsRecord";
-import {mapInputDetails, processUserInput} from "./utility/main";
-import { factory } from "typescript";
+import { Item } from "./models/Item";
+import { ItemFactory } from "./models/ItemFactory";
+import {mapInputDetails, processUserInput, saveItem, displayAllItems} from "./utility/utils";
 const prompt = promptSync();
-let allItemsCollection:Item[] = [];
+let allItemsList:Item[] = [];
 
 
 // Driver Code
-let item:any = mapInputDetails(process.argv.slice(2));
-item = ItemFactory.createItem(item);
-ItemFactory.saveItem(item);
+let userInput:any = mapInputDetails(process.argv.slice(2));
+let item = ItemFactory.createItem(userInput);
+allItemsList = saveItem(item,allItemsList);
 takeInputForNewItem();
-ItemFactory.displayAllItems()
+displayAllItems(allItemsList);  
 
 
 // Functions 
@@ -25,8 +24,7 @@ function takeInputForNewItem(){
     }
     let userInput:any = prompt("Enter your item -name -price -quantity and -type  (Name must be first) ");
     userInput = processUserInput(userInput);
-    let item:any = mapInputDetails(userInput);
-    item = ItemFactory.createItem(item);
-    ItemFactory.saveItem(item);
+    item = ItemFactory.createItem(userInput);
+    allItemsList = saveItem(item,allItemsList);
     takeInputForNewItem();
 }

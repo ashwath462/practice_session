@@ -1,5 +1,9 @@
-import { validateName, validatePrice, validateQuantity, validateType } from "./utils";
-
-export const itemDetails = ['name','price','quantity','type'];
-export const itemDetailsValidationFunctions = [validateName, validatePrice,validateQuantity,validateType];
 export type Types = 'raw'|'manufactured'|'imported';
+
+export const SALES_TAX = 0.125;
+export const MANUFACTURING_TAX = 0.02;
+export const IMPORT_DUTY = 0.1;
+
+export const LOW_SURCHARGE = 5;
+export const MID_SURCHARGE = 10;
+export const HIGH_SURCHARGE = 0.05;
