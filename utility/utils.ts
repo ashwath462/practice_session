@@ -1,6 +1,7 @@
 import { Item } from '../models/Item';
 
 import promptSync from "prompt-sync";
+import { Type } from './constants';
 const prompt = promptSync();
 
 export const itemDetailsValidationFunctions: any = {
@@ -29,7 +30,10 @@ export const itemDetailsValidationFunctions: any = {
         throw new Error('Quantity must be a number between 1-100!');
     },
     "type": (type: string) => {
-        if (type == "raw" || type == "manufactured" || type == "imported") return type;
+        // if (type == "raw" || type == "manufactured" || type == "imported") return type;
+        if(type in Type){
+            return type;
+        }
         throw new Error("Invalid type of item! Kindly enter a valid type.")
     }
 }
