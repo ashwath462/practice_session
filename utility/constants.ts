@@ -1,7 +1,12 @@
+export function takeInput(): string {
+  const readline = require("readline-sync");
+  return readline.question("");
+}
+
 export enum Type {
-    raw = "raw",
-    manufactured = "manufactured",
-    imported = "imported"
+  raw = "raw",
+  manufactured = "manufactured",
+  imported = "imported",
 }
 
 export const SALES_TAX = 0.125;

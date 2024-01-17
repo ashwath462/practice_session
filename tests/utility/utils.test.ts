@@ -1,12 +1,12 @@
-import { expect, test } from 'vitest';
+import { expect, test, vitest } from 'vitest';
 import { ItemFactory } from '../../models/ItemFactory';
-import { mapInputDetails, processUserInput, itemDetailsValidationFunctions } from '../../utility/utils';
+import { mapInputDetails, processUserInput, itemDetailsValidationFunctions, saveItem, displayAllItems } from '../../utility/utils';
 import { RawItem } from '../../models/RawItem';
 import { ImportedItem } from '../../models/ImportedItem';
 import { ManufacturedItem } from '../../models/ManufacturedItem';
-import { forEachChild } from 'typescript';
-import { Type } from '../../utility/constants';
-
+import { Item } from '../../models/Item';
+import { vi } from 'vitest'
+import * as utils from '../../utility/constants';
 
 
 
@@ -178,27 +178,71 @@ test('program works correctly for all types', () => {
     })
 })
 
-// test('program works correctly for raw type', () {
-//     let testItem = ItemFactory.createItem('apple', 25.00, 10, Type.raw);
-//     expect(testItem.calculateTax(), 3.125);
-// });
 
-// test('program works correctly for manufactured type', () {
-//     let testItem = ItemFactory.createItem('shoe', 300.00, 10, ItemTypes.manufactured);
-//     expect(testItem.calculateTax(), 44.25);
-// });
+test('save items Y', ()=>{  
+    let itemArray:Item[] = [];
+    let item1:any = new RawItem('item1',10,20);
+    let item2:any = new ManufacturedItem('shoe',100,30);
+    let item3:any = new ImportedItem('tie',500,50);
+    let item4:any = new ImportedItem('shirt',2000,20);
+    let item5:any = new ImportedItem('jeans',2500,10);
+    let item6:any = new ManufacturedItem('watch',5080,300);
+    let testCases:any = [
+        [item1,[item1]],
+        [item2,[item1,item2]],
+        [item3,[item1,item2,item3]],
+        [item4,[item1,item2,item3,item4]],
+        [item5,[item1,item2,item3,item4,item5]],
+        [item6,[item1,item2,item3,item4,item5,item6]],
+    ]
 
-// test('program works correctly for imported type', () {
-//     let testItem = ItemFactory.itemFactory('purse', 1000.00, 10, ItemTypes.imported);
-//     expect(testItem.calculateTax(), 155.0);
-// });
+    testCases.forEach((testcase)=>{
+        const mockPrompt = vi.spyOn(utils,'takeInput').mockReturnValueOnce("y");
+        const output = saveItem(testcase[0],itemArray);
+        console.log(output);
+        itemArray = [...itemArray,testcase[0]];
+        expect(output).toStrictEqual(testcase[1]);
+    });
+})
 
-// test('program works correctly for imported type', () {
-//     let testItem = ItemFactory.itemFactory('purse', 50.00, 10, ItemTypes.imported);
-//     expect(testItem.calculateTax(), 10.0);
-// });
+test('save items N', ()=>{  
+    let testCases:any = [
+        new RawItem('item1',10,20),
+        new ManufacturedItem('shoe',100,30)
+    ]
 
-// test('program works correctly for imported type', () {
-//     let testItem = ItemFactory.itemFactory('purse', 100.00, 10, ItemTypes.imported);
-//     expect(testItem.calculateTax(), 20.0);
-// });
+    testCases.forEach((testcase)=>{
+        const mockPrompt = vi.spyOn(utils,'takeInput').mockReturnValueOnce("n");
+        const output = saveItem(testcase[0],[]);
+        console.log(output);
+        expect(output).toStrictEqual([]);
+    });
+})
+
+test('display item Y', ()=>{  
+    let testCases:any = [
+        [new RawItem('item1',10,20)],
+        [new RawItem('item1',10,20), new ManufacturedItem('shoe',100,30)]
+    ]
+
+    testCases.forEach((testcase)=>{
+        const mockPrompt = vi.spyOn(utils,'takeInput').mockReturnValueOnce("y");
+        const output = displayAllItems(testcase);
+        console.log(output);
+        expect(output).toBe(true);
+    });
+})
+
+test('display item N', ()=>{  
+    let testCases:any = [
+        [new RawItem('item1',10,20)],
+        [new RawItem('item1',10,20), new ManufacturedItem('shoe',100,30)]
+    ]
+
+    testCases.forEach((testcase)=>{
+        const mockPrompt = vi.spyOn(utils,'takeInput').mockReturnValueOnce("n");
+        const output = displayAllItems(testcase);
+        console.log(output);
+        expect(output).toBe(false);
+    });
+})

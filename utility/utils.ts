@@ -1,8 +1,6 @@
 import { Item } from '../models/Item';
-
-import promptSync from "prompt-sync";
 import { Type } from './constants';
-const prompt = promptSync();
+import { takeInput } from './constants';
 
 export const itemDetailsValidationFunctions: any = {
     "name": (name: string) => {
@@ -74,24 +72,25 @@ export function processUserInput(inputValues: string) {
 export function saveItem(item: Item, allItemsList: Item[]): Item[] {
     console.log(item);
     while (true) {
-        const inputChoice = prompt("Would you like to save this item (y/n) : ");
-        if (inputChoice == "Y" || inputChoice == "y") {
+        console.log("Would you like to save this item (y/n) : ");
+        const input = takeInput();
+        if (input == "Y" || input == "y") {
             allItemsList = [...allItemsList, item];
             return allItemsList;
         }
-        else if (inputChoice == "N" || inputChoice == "n") break;
+        else if (input == "N" || input == "n") break;
     }
     return [];
 }
 
 export function displayAllItems(allItemsList: Item[]) {
     while (true) {
-        const input = prompt("Would you like to view all item list (y/n) : ")
+        console.log("Would you like to view all item list (y/n) : ");
+        const input = takeInput();
         if (input == "Y" || input == "y") {
             console.log(allItemsList);
-            break;
+            return true;
         }
-        else if (input == "N" || input == "n") break;
-        else continue;
+        else if (input == "N" || input == "n") return false;
     }
 }
