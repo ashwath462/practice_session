@@ -5,6 +5,7 @@ import { RawItem } from '../../models/RawItem';
 import { ImportedItem } from '../../models/ImportedItem';
 import { ManufacturedItem } from '../../models/ManufacturedItem';
 import { forEachChild } from 'typescript';
+import { Type } from '../../utility/constants';
 
 
 
@@ -148,6 +149,7 @@ test('Create Item', () => {
     value = new ManufacturedItem("Football", 200, 25);
     value.calculateSalesTax();
     expect(ItemFactory.createItem(new Map<string, any>([["name", "Football"], ["price", 200], ["quantity", 25], ["type", "manufactured"]]))).toStrictEqual(value);
+
 })
 
 test('Create item fails', () => {
@@ -161,3 +163,42 @@ test('Create item fails', () => {
     });
 
 })
+
+test('program works correctly for all types', () => {
+    let testCases: any = [
+        [new Map<string, string>([["name", "apple"], ["price", "25.00"], ["quantity", "10"], ["type", "raw"]]),3.125],
+        [new Map<string, string>([["name", "shoe"], ["price", "300.00"], ["quantity", "10"], ["type", "manufactured"]]),44.25],
+        [new Map<string, string>([["name", "purse"], ["price", "1000.00"], ["quantity", "10"], ["type", "imported"]]),155.0],
+        [new Map<string, string>([["name", "purse"], ["price", "50.00"], ["quantity", "10"], ["type", "imported"]]),10.0],
+        [new Map<string, string>([["name", "purse"], ["price", "100.00"], ["quantity", "10"], ["type", "imported"]]),20.0],
+    ]
+
+    testCases.forEach((testcase) => {
+        expect(()=>ItemFactory.createItem(testcase[0]).toBe(testcase[1]));
+    })
+})
+
+// test('program works correctly for raw type', () {
+//     let testItem = ItemFactory.createItem('apple', 25.00, 10, Type.raw);
+//     expect(testItem.calculateTax(), 3.125);
+// });
+
+// test('program works correctly for manufactured type', () {
+//     let testItem = ItemFactory.createItem('shoe', 300.00, 10, ItemTypes.manufactured);
+//     expect(testItem.calculateTax(), 44.25);
+// });
+
+// test('program works correctly for imported type', () {
+//     let testItem = ItemFactory.itemFactory('purse', 1000.00, 10, ItemTypes.imported);
+//     expect(testItem.calculateTax(), 155.0);
+// });
+
+// test('program works correctly for imported type', () {
+//     let testItem = ItemFactory.itemFactory('purse', 50.00, 10, ItemTypes.imported);
+//     expect(testItem.calculateTax(), 10.0);
+// });
+
+// test('program works correctly for imported type', () {
+//     let testItem = ItemFactory.itemFactory('purse', 100.00, 10, ItemTypes.imported);
+//     expect(testItem.calculateTax(), 20.0);
+// });
