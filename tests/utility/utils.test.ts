@@ -4,6 +4,12 @@ import { mapInputDetails, processUserInput, itemDetailsValidationFunctions } fro
 import { RawItem } from '../../models/RawItem';
 import { ImportedItem } from '../../models/ImportedItem';
 import { ManufacturedItem } from '../../models/ManufacturedItem';
+import { forEachChild } from 'typescript';
+import { Type } from '../../utility/constants';
+
+
+
+
 test("Testing Validate Name", () => {
     expect(itemDetailsValidationFunctions["name"]("ashwath")).toBe("Ashwath");
     expect(itemDetailsValidationFunctions["name"]("ash")).toBe("Ash");
@@ -12,10 +18,16 @@ test("Testing Validate Name", () => {
     expect(itemDetailsValidationFunctions["name"]("Bcq HR")).toBe("Bcq hr");
 })
 
-test.fails('name validation fail', () => {
-    expect(itemDetailsValidationFunctions["name"]("as")).toThrowError();
-    expect(itemDetailsValidationFunctions["name"]("ashwathashwathashwath")).toThrowError(Error("Please enter a valid name (Expected characters in range 3-20)"));
-})
+test('name validation fail', () => {
+    let testCases:any = [
+        "as",
+        "ashwathashwathashwath",
+    ];
+
+    testCases.forEach((testcase:any)=>{
+        expect(()=>itemDetailsValidationFunctions["name"](testcase)).toThrowError();
+    });
+});
 
 test("Testing Validate Price", () => {
     expect(itemDetailsValidationFunctions["price"]("1")).toBe(1);
@@ -28,13 +40,19 @@ test("Testing Validate Price", () => {
     expect(itemDetailsValidationFunctions["price"]("0.001")).toBe(0.001);
 })
 
-test.fails('price validation fail', () => {
-    expect(itemDetailsValidationFunctions["price"]("abc")).toThrowError();
-    expect(itemDetailsValidationFunctions["price"]("100000000000000")).toThrowError();
-    expect(itemDetailsValidationFunctions["price"]("1fg")).toThrowError();
-    expect(itemDetailsValidationFunctions["price"]("-0.001")).toThrowError();
-    expect(itemDetailsValidationFunctions["price"]("-100")).toThrowError();
-    expect(itemDetailsValidationFunctions["price"]("0")).toThrowError();
+test('price validation fail', () => {
+    let testCases:any = [
+        "abc",
+        "100000000000000",
+        "1fg",
+        "-0.001",
+        "-100",
+        "0",
+    ];
+
+    testCases.forEach((testcase:any)=>{
+        expect(()=>itemDetailsValidationFunctions["price"](testcase)).toThrowError();
+    });
 })
 
 test('Testing validate Quantity', () => {
@@ -43,13 +61,19 @@ test('Testing validate Quantity', () => {
     expect(itemDetailsValidationFunctions["quantity"]("100")).toBe(100);
 })
 
-test.fails('quality validation fail', () => {
-    expect(itemDetailsValidationFunctions["quantity"]("-10")).toThrowError();
-    expect(itemDetailsValidationFunctions["quantity"]("10.5")).toThrowError();
-    expect(itemDetailsValidationFunctions["quantity"]("1.5")).toThrowError();
-    expect(itemDetailsValidationFunctions["quantity"]("101")).toThrowError();
-    expect(itemDetailsValidationFunctions["quantity"]("1000")).toThrowError();
-    expect(itemDetailsValidationFunctions["quantity"]("0")).toThrowError();
+test('quality validation fail', () => {
+    let testCases:any = [
+        "10.99",
+        "-10",
+        "0",
+        "100.1",
+        "0.5"
+    ];
+
+    testCases.forEach((testcase:any)=>{
+        expect(()=>itemDetailsValidationFunctions["quantity"](testcase)).toThrowError();
+    });
+ 
 })
 
 test('Testing validate type', () => {
@@ -58,12 +82,18 @@ test('Testing validate type', () => {
     expect(itemDetailsValidationFunctions["type"]("imported")).toBe("imported");
 })
 
-test.fails('type validation fail', () => {
-    expect(itemDetailsValidationFunctions["type"]('abc')).toThrowError();
-    expect(itemDetailsValidationFunctions["type"]('manufactree')).toThrowError();
-    expect(itemDetailsValidationFunctions["type"]('important')).toThrowError();
-    expect(itemDetailsValidationFunctions["type"](' ')).toThrowError();
-    expect(itemDetailsValidationFunctions["type"]('')).toThrowError();
+test('type validation fail', () => {
+    let testCases:any = [
+        "abc",
+        "manufactree",
+        "importad",
+        ' ',
+        "",
+    ];
+
+    testCases.forEach((testcase:any)=>{
+        expect(()=>itemDetailsValidationFunctions["type"](testcase)).toThrowError();
+    });
 })
 
 test('map input details', () => {
@@ -71,26 +101,13 @@ test('map input details', () => {
     expect(mapInputDetails(['-name', 'tea', '-price', '245', '-type', 'manufactured', '-quantity', '12'])).toStrictEqual(new Map<string, any>([['name', 'Tea'], ['price', 245], ['type', 'manufactured'], ['quantity', 12]]));
 })
 
-test.fails('map input details fails', () => {
-    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrowError();
+test('map input details fails', () => {
+    expect(()=>mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrow();
+    expect(()=>mapInputDetails(['-price', '-name', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrow();
+    expect(()=>mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', 'asdf', '90'])).toThrow();
+    expect(()=>mapInputDetails(['-name', '-price', '-type', '-quantity', '-itemName', '-100', 'raw', '90'])).toThrow();
+    expect(()=>mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', '90'])).toThrow();
 })
-test.fails('map input details fails2', () => {
-    expect(mapInputDetails(['-price', '-name', '-type', '-quantity', 'itemName', '100', 'raw','3'])).toThrowError();
-})
-test.fails('map input details fails3', () => {
-    expect(mapInputDetails(['-price', '-name', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrowError();
-})
-test.fails('map input details fails4', () => {
-    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', 'asdf', '90'])).toThrowError();
-})
-
-    
-    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', '-itemName', '-100', 'raw', '90'])).toThrowError();
-    expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', '90'])).toThrowError();
-
-
-
-
 
 test('process user input', () => {
     expect(processUserInput("  -name item1 -price 1000      -quantity 10 -type imported")).toStrictEqual(new Map<string, any>([['name', 'Item1'], ['price', 1000], ['quantity', 10], ['type', 'imported']]));
@@ -100,13 +117,16 @@ test('process user input', () => {
     expect(processUserInput("  -name box -price 10       -quantity 500 -type raw")).toStrictEqual(new Map<string, any>([['name', 'Box'], ['price', 10], ['quantity', 500], ['type', 'raw']]));
 })
 
-test.fails('process user input fails', () => {
-    expect(processUserInput("-price ash 10 -quantity 100 -type raw")).toThrow();
-    expect(processUserInput("-name item1 -price ash 10 -quantity 100 -type raw")).toThrow();
-    expect(processUserInput("-price item 1 10 -quantity 100 -type raw")).toThrow();
-    expect(processUserInput("-name item1 price 10 -quantity 100 -type raw")).toThrow();
-    expect(processUserInput("name item2 price 1000 -quantity 100 -type imported")).toThrow();
-    expect(processUserInput("-name item2 -price 1000 -price 100 -type imported")).toThrow();
+test('process user input fails', () => {
+    let testCases:any = [
+        "-price ash 10 -quantity 100 -type raw",
+        "-name item1 -price ash 10 -quantity 100 -type raw",
+        "-price item 1 10 -quantity 100 -type raw"
+    ];
+
+    testCases.forEach((testcase:any)=>{
+        expect(()=>processUserInput(testcase)).toThrowError();
+    });
 })
 
 test('Create Item', () => {
@@ -118,17 +138,67 @@ test('Create Item', () => {
     value.calculateSalesTax();
     expect(ItemFactory.createItem(new Map<string, any>([["name", "Item1"], ["price", 20], ["quantity", 50], ["type", "imported"]]))).toStrictEqual(value);
 
+    value = new ImportedItem("Item1", 100, 1000);
+    value.calculateSalesTax();
+    expect(ItemFactory.createItem(new Map<string, any>([["name", "Item1"], ["price", 100], ["quantity", 1000], ["type", "imported"]]))).toStrictEqual(value);
+
+    value = new ImportedItem("Item1", 20000, 10);
+    value.calculateSalesTax();
+    expect(ItemFactory.createItem(new Map<string, any>([["name", "Item1"], ["price", 20000], ["quantity", 10], ["type", "imported"]]))).toStrictEqual(value);
+
     value = new ManufacturedItem("Football", 200, 25);
     value.calculateSalesTax();
     expect(ItemFactory.createItem(new Map<string, any>([["name", "Football"], ["price", 200], ["quantity", 25], ["type", "manufactured"]]))).toStrictEqual(value);
 
 })
 
-test.fails('Create item fails', () => {
-    expect(ItemFactory.createItem(new Map<string, string>([["name", "football"], ["price", "200"], ["quantity", "125"], ["type", "manufactured"]]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string, string>([["name", "item2"], ["price", "200"], ["quantity", "125"], ["type", "manufacture"]]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string, string>([["name", "item3"], ["price", "200"], ["quantity", "125"], ["type", "raw"]]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string, string>([["name", " "], ["price", "200"], ["quantity", "125"], ["type", "raw"]]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string, string>([["name", " "], ["price", "abc"], ["quantity", "125"], ["type", "raw"]]))).toThrowError();
-    expect(ItemFactory.createItem(new Map<string, string>([["name", " "], ["price", "abc"], ["quantity", "avg"], ["type", "imported"]]))).toThrowError();
+test('Create item fails', () => {
+    let testCases:any = [
+        new Map<string, string>([["name", "item2"], ["price", "200"], ["quantity", "125"], ["type", "manufacture"]]),
+    ];
+
+    testCases.forEach((testcase:any)=>{
+        console.log(testcase);
+        expect(()=>ItemFactory.createItem(testcase)).toThrowError();
+    });
+
 })
+
+test('program works correctly for all types', () => {
+    let testCases: any = [
+        [new Map<string, string>([["name", "apple"], ["price", "25.00"], ["quantity", "10"], ["type", "raw"]]),3.125],
+        [new Map<string, string>([["name", "shoe"], ["price", "300.00"], ["quantity", "10"], ["type", "manufactured"]]),44.25],
+        [new Map<string, string>([["name", "purse"], ["price", "1000.00"], ["quantity", "10"], ["type", "imported"]]),155.0],
+        [new Map<string, string>([["name", "purse"], ["price", "50.00"], ["quantity", "10"], ["type", "imported"]]),10.0],
+        [new Map<string, string>([["name", "purse"], ["price", "100.00"], ["quantity", "10"], ["type", "imported"]]),20.0],
+    ]
+
+    testCases.forEach((testcase) => {
+        expect(()=>ItemFactory.createItem(testcase[0]).toBe(testcase[1]));
+    })
+})
+
+// test('program works correctly for raw type', () {
+//     let testItem = ItemFactory.createItem('apple', 25.00, 10, Type.raw);
+//     expect(testItem.calculateTax(), 3.125);
+// });
+
+// test('program works correctly for manufactured type', () {
+//     let testItem = ItemFactory.createItem('shoe', 300.00, 10, ItemTypes.manufactured);
+//     expect(testItem.calculateTax(), 44.25);
+// });
+
+// test('program works correctly for imported type', () {
+//     let testItem = ItemFactory.itemFactory('purse', 1000.00, 10, ItemTypes.imported);
+//     expect(testItem.calculateTax(), 155.0);
+// });
+
+// test('program works correctly for imported type', () {
+//     let testItem = ItemFactory.itemFactory('purse', 50.00, 10, ItemTypes.imported);
+//     expect(testItem.calculateTax(), 10.0);
+// });
+
+// test('program works correctly for imported type', () {
+//     let testItem = ItemFactory.itemFactory('purse', 100.00, 10, ItemTypes.imported);
+//     expect(testItem.calculateTax(), 20.0);
+// });

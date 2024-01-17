@@ -16,5 +16,4 @@ export abstract class Item {
     }
 
     public abstract calculateSalesTax(): number;
-
 }

@@ -40,29 +40,23 @@ export const itemDetailsValidationFunctions: any = {
 
 export function mapInputDetails(input: string[]) {
     let item = new Map<string, string>();
-    try {
-        if (input.length != 8 || input[0] != "-name") {
-            throw new Error("Kindly enter all arguments correctly. -name must be entered first");
+    if (input.length != 8 || input[0] != "-name") {
+        throw new Error("Kindly enter all arguments correctly. -name must be entered first");
+    }
+    for (let i = 0; i < 8; i += 2) {
+        if (input[i][0] == '-') {
+            item.set(input[i].slice(1), input[i + 1]);
         }
-        for (let i = 0; i < 8; i += 2) {
-            if (input[i][0] == '-') {
-                item.set(input[i].slice(1), input[i + 1]);
-            }
-        }
-        if (item.size != 4) {
-            throw new Error('Kindly enter all details in correct format!');
-        }
+    }
+    if (item.size != 4) {
+        throw new Error('Kindly enter all details in correct format!');
+    }
 
-        for (let [key, value] of item) {
-            value = itemDetailsValidationFunctions[key](value);
-            item.set(key, value);
-        }
-        return item;
+    for (let [key, value] of item) {
+        value = itemDetailsValidationFunctions[key](value);
+        item.set(key, value);
     }
-    catch (error: any) {
-        console.log(error.message);
-        return;
-    }
+    return item;
 }
 
 export function processUserInput(inputValues: string) {

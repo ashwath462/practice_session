@@ -17,13 +17,15 @@ export class ItemFactory {
                 case 'imported':
                     item = new ImportedItem(userInput.get('name'), userInput.get('price'), userInput.get('quantity'));
                     break;
+                default:
+                    throw new Error('Type doesn\'t match');
             }
             item.calculateSalesTax();
             return item;
         }
         catch (error: any) {
             console.log(error.message);
-            return;
+            throw error;
         }
     }
 }
