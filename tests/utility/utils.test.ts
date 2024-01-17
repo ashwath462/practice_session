@@ -73,11 +73,24 @@ test('map input details', () => {
 
 test.fails('map input details fails', () => {
     expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrowError();
+})
+test.fails('map input details fails2', () => {
+    expect(mapInputDetails(['-price', '-name', '-type', '-quantity', 'itemName', '100', 'raw','3'])).toThrowError();
+})
+test.fails('map input details fails3', () => {
     expect(mapInputDetails(['-price', '-name', '-type', '-quantity', 'itemName', '100', 'raw'])).toThrowError();
+})
+test.fails('map input details fails4', () => {
     expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', 'asdf', '90'])).toThrowError();
+})
+
+    
     expect(mapInputDetails(['-name', '-price', '-type', '-quantity', '-itemName', '-100', 'raw', '90'])).toThrowError();
     expect(mapInputDetails(['-name', '-price', '-type', '-quantity', 'itemName', '100', 'raw', '90'])).toThrowError();
-})
+
+
+
+
 
 test('process user input', () => {
     expect(processUserInput("  -name item1 -price 1000      -quantity 10 -type imported")).toStrictEqual(new Map<string, any>([['name', 'Item1'], ['price', 1000], ['quantity', 10], ['type', 'imported']]));
@@ -88,9 +101,12 @@ test('process user input', () => {
 })
 
 test.fails('process user input fails', () => {
-    expect(processUserInput("-price ash 10 -quantity 100 -type raw")).toThrowError();
-    expect(processUserInput("-name item1 -price ash 10 -quantity 100 -type raw")).toThrowError();
-    expect(processUserInput("-price item 1 10 -quantity 100 -type raw")).toThrowError();
+    expect(processUserInput("-price ash 10 -quantity 100 -type raw")).toThrow();
+    expect(processUserInput("-name item1 -price ash 10 -quantity 100 -type raw")).toThrow();
+    expect(processUserInput("-price item 1 10 -quantity 100 -type raw")).toThrow();
+    expect(processUserInput("-name item1 price 10 -quantity 100 -type raw")).toThrow();
+    expect(processUserInput("name item2 price 1000 -quantity 100 -type imported")).toThrow();
+    expect(processUserInput("-name item2 -price 1000 -price 100 -type imported")).toThrow();
 })
 
 test('Create Item', () => {
