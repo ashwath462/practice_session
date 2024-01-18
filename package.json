@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "mock-stdin": "^1.0.0",
     "prompt-sync": "^4.2.0",
     "readline-sync": "^1.4.10",
     "ts-node": "^10.9.2",
@@ -7,6 +8,7 @@
     "vitest": "^1.1.3"
   },
   "devDependencies": {
+    "@types/prompt-sync": "^4.2.3",
     "@types/readline-sync": "^1.4.8",
     "@vitest/coverage-v8": "^1.1.3"
   }
