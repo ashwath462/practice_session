@@ -39,9 +39,17 @@ export function validateRollNumber(userInput:any): number{
     return rollNumber;
 }
 
+export function validateAddress(userInput:string){
+    userInput = userInput.replace(/\s{2,}/g, ' ').trim().toLowerCase();
+    if(userInput.length<=4){
+        throw new Error('Kindly enter valid input');
+    }
+    return userInput;
+}
+
 export function validateCourses(userInput:any) :string[]{
     const courses = userInput.replace(/\s+/g,'').toUpperCase().split(',');
-    courses.forEach((element)=>{
+    courses.forEach((element:any)=>{
         if(!(element == 'A' || element == 'B' || element == 'C' || element == 'D' || element == 'E' || element == 'F')){
             throw new Error('Enter valid courses!');
         }

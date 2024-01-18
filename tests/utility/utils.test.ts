@@ -1,6 +1,6 @@
 import { expect, test, vi } from "vitest";
 import * as utility from '../../utility/constants';
-import { validateName, validateAge, validateRollNumber, validateCourses } from "../../utility/utils";
+import { validateName, validateAge, validateRollNumber, validateCourses, validateAddress } from "../../utility/utils";
 
 test('taking input', ()=>{
     const testCases = ['hello','how are you', 'Ashwath Arora','Assignment 2'];
@@ -49,6 +49,28 @@ test('validate Age Error',() => {
         expect(()=>validateAge(testcase)).toThrowError();
     })
 })
+
+
+test('validate Address Correct', ()=>{
+    let testCases = [
+        ['17-HIG,  Bhawani Nagar', '17-hig, bhawani nagar'],
+        ['31-Krishnodaya Nagar','31-krishnodaya nagar']
+    ];
+    testCases.forEach((testcase)=>{
+        expect(validateAddress(testcase[0])).toBe(testcase[1]);
+    })
+}),
+
+test('validate Address Correct', ()=>{
+    let testCases = [
+        '17',
+        '17-h',
+        '3C',
+    ];
+    testCases.forEach((testcase)=>{
+        expect(()=>validateAddress(testcase)).toThrowError();
+    })
+}),
 
 
 test('validate Roll Number Correct',() => {

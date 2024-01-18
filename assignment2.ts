@@ -2,18 +2,25 @@ import { User } from "./model/User";
 import {
   validateName,
   validateAge,
+  validateAddress,
   validateRollNumber,
   validateCourses,
 } from "./utility/utils";
 import { input } from "./utility/constants";
+import * as fsPromise from 'fs';
+import { File } from "./model/File";
+
+
 
 let flag = true;
 let user: User | null = null;
 console.log(
   "<-------------------------------------- Welcome to our application -------------------------------------->"
 );
+const file = File.getInstance();
+console.clear();
 console.log(
-  "Menu : \n1. Add User details. \n2. Display User details. \n3. Delete User detils. \n4. Save User details. \n5.Exit"
+  "Menu : \n1. Add User details. \n2. Display User details. \n3. Delete User detils. \n4. Save User details. \n5. Exit"
 );
 while (flag) {
   const inputChoice = input("Enter a choice form menu (1-5) : ");
@@ -32,14 +39,22 @@ while (flag) {
       const rollNumber = validateRollNumber(
         input("Enter roll number to be deleted : ")
       );
-
-      // call add user details
+      file.deleteUser(rollNumber);
       break;
     case "4":
-      // call add user details
+      if (user != null) {
+        try{
+          file.saveUser(user);
+        } catch(err:any){
+          console.log(err.message);
+        }
+      } else {
+        console.log("No user details found");
+      }
       break;
     case "5":
       console.log("Have a good day!");
+      file.showAllUser();
       flag = false;
       break;
     default:
@@ -53,7 +68,7 @@ function addUserDetails() {
     try {
       const name = validateName(input("Full Name (space seperated): "));
       const age = validateAge(input("Age : "));
-      const address = input("Address : ");
+      const address = validateAddress(input("Address : "));
       const rollNumber = validateRollNumber(input("Roll Number: "));
       const courses = validateCourses(
         input("Set of courses (comma seperated 4 values) : ")
