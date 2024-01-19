@@ -41,16 +41,16 @@ export class File{
         } else {
             throw new Error(`User with roll number ${rollNumber} not found.`);
         }
-        let userData:any = '';
+        let hashedUserData:any = '';
         if(allUsers.length != 0){
             allUsers.map((user:any)=>{
                 user = JSON.stringify(user); 
                 user = Buffer.from(user, "utf8");
                 user = user.toString("base64");
-                userData = userData+','+user;
+                hashedUserData += ','+user;
             })
         }
-        fsPromise.writeFileSync('./database/db.txt',userData);
+        fsPromise.writeFileSync('./database/db.txt',hashedUserData);
         return true;
     }
 
@@ -62,15 +62,15 @@ export class File{
             throw new Error(`User with roll number ${rollNumber} already exist`);
         }
         allUsers.push(userInput);
-        let userData:any = '';
+        let hashedUserData:any = '';
         this.sortUsers(allUsers);
         allUsers.map((user:any)=>{
             user = JSON.stringify(user); 
             user = Buffer.from(user, "utf8");
             user = user.toString("base64");
-            userData = userData+','+user;
+            hashedUserData += ','+user;
         })
-        fsPromise.writeFileSync('./database/db.txt',userData);
+        fsPromise.writeFileSync('./database/db.txt',hashedUserData);
         console.log('User saved successfully');
         return true;
     }

@@ -60,6 +60,8 @@ while (flag) {
       console.log("Invalid input. Try Again!\n");
   }
 }
+console.log(file.getAllUsers());
+
 
 function addUserDetails() {
   console.log("Kindly enter the following details about user : ");
@@ -78,11 +80,4 @@ function addUserDetails() {
       console.log("Try Again!\n");
     }
   }
-}
-
-function displayUserDetails(){
-  console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
-  console.log('Name                     Roll Number     Age      Address                                 Courses                                                  ');
-  console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
-  console.log(`${this.name}               ${this.rollNumber}       ${this.age}      ${this.address}                                 ${this.courses}                                                  `);
 }
