@@ -17,7 +17,7 @@ export class User{
         console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
         console.log('Name                     Roll Number     Age      Address                                 Courses                                                  ');
         console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
-        console.log(`${this.name}               ${this.rollNumber}       ${this.age}      ${this.address}                                 ${this.courses}                                                  `);
+        console.log(`${this.name}               ${this.rollNumber}       ${this.age}      ${this.address}                                 ${this.courses}                                     `);
     }
 
     public getRollNumber(){

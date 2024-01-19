@@ -63,9 +63,10 @@ test('validate Address Correct', ()=>{
 
 test('validate Address Correct', ()=>{
     let testCases = [
-        '17',
-        '17-h',
+        '1',
+        ' ',
         '3C',
+        '3-D'
     ];
     testCases.forEach((testcase)=>{
         expect(()=>validateAddress(testcase)).toThrowError();

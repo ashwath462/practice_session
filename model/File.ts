@@ -13,7 +13,15 @@ export class File{
         return File.instance;
     }
 
-    private getAllUsers(){
+    public sortUsers(allUsers:any){
+        allUsers.sort((a:any, b:any) => {
+            const nameComparison = a.name.localeCompare(b.name);
+            return nameComparison !== 0 ? nameComparison : a.rollNumber - b.rollNumber;
+        });
+        return allUsers;
+    }
+
+    public getAllUsers(){
         const data = fsPromise.readFileSync('./database/db.txt','utf8');
         let allUsers:any = data.split(',').slice(1);
 
@@ -21,14 +29,11 @@ export class File{
             let bufferObj = Buffer.from(element, "base64"); 
             return JSON.parse(bufferObj?.toString("utf8"));
         })
-        allUsers.sort((a:any, b:any) => {
-            return a.name.localeCompare(b.name);
-        });
         return allUsers;
     }
 
     public deleteUser(rollNumber:number){
-        let allUsers = this.getAllUsers();
+        let allUsers:any = this.getAllUsers();
         const indexToRemove = allUsers.findIndex((user:any) => user.rollNumber === rollNumber);
         if (indexToRemove !== -1) {
             allUsers.splice(indexToRemove,1);
@@ -46,6 +51,7 @@ export class File{
             })
         }
         fsPromise.writeFileSync('./database/db.txt',userData);
+        return true;
     }
 
     public saveUser(userInput:User){
@@ -55,24 +61,19 @@ export class File{
         if (indexToRemove !== -1) {
             throw new Error(`User with roll number ${rollNumber} already exist`);
         }
-        let user:any = JSON.stringify(userInput); 
-        user = Buffer.from(user, "utf8");
-        user = user.toString("base64");
-        user = ','+user;
-        fsPromise.writeFileSync('./database/db.txt',user,{flag:'a+'});
+        allUsers.push(userInput);
+        let userData:any = '';
+        this.sortUsers(allUsers);
+        allUsers.map((user:any)=>{
+            user = JSON.stringify(user); 
+            user = Buffer.from(user, "utf8");
+            user = user.toString("base64");
+            userData = userData+','+user;
+        })
+        fsPromise.writeFileSync('./database/db.txt',userData);
+        console.log('User saved successfully');
+        return true;
     }
 
-    public showAllUser(){
-        const data = fsPromise.readFileSync('./database/db.txt','utf8');
-        let allUsers:any = data.split(',').slice(1);
-        if(!(allUsers.length >=1 && allUsers[0]!='')){
-            throw new Error('No user to display');
-        }
-        allUsers = allUsers.map((element:any)=>{
-            let bufferObj = Buffer.from(element, "base64"); 
-            return JSON.parse(bufferObj?.toString("utf8"));
-        })
-        console.log(allUsers);
-    }
 }
 

@@ -54,7 +54,6 @@ while (flag) {
       break;
     case "5":
       console.log("Have a good day!");
-      file.showAllUser();
       flag = false;
       break;
     default:
@@ -79,4 +78,11 @@ function addUserDetails() {
       console.log("Try Again!\n");
     }
   }
+}
+
+function displayUserDetails(){
+  console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
+  console.log('Name                     Roll Number     Age      Address                                 Courses                                                  ');
+  console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
+  console.log(`${this.name}               ${this.rollNumber}       ${this.age}      ${this.address}                                 ${this.courses}                                                  `);
 }

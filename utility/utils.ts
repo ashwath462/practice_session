@@ -41,7 +41,7 @@ export function validateRollNumber(userInput:any): number{
 
 export function validateAddress(userInput:string){
     userInput = userInput.replace(/\s{2,}/g, ' ').trim().toLowerCase();
-    if(userInput.length<=4){
+    if(userInput.length<4){
         throw new Error('Kindly enter valid input');
     }
     return userInput;
