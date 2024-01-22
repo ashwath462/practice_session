@@ -7,7 +7,6 @@ import {
   validateCourses,
 } from "./utility/utils";
 import { input } from "./utility/constants";
-import * as fsPromise from 'fs';
 import { File } from "./model/File";
 
 
