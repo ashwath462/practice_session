@@ -14,12 +14,12 @@ const userStore = new UsersData();
 console.log(
   "<-------------------------------------- Welcome to our application -------------------------------------->"
 );
-console.clear();
 while (flag) {
   console.log(
     "Menu : \n1. Add User details. \n2. Display User details. \n3. Delete User detils. \n4. Save User details. \n5. Exit"
   );
   const inputChoice = input("Enter a choice form menu (1-5) : ");
+  console.clear();
   switch (inputChoice) {
     case "1":
       addUserDetails();

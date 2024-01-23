@@ -103,6 +103,7 @@ export class UsersData {
 
   public appendUser(userInput: User) {
     this.usersData.push(userInput);
+    this.sortByName(this.usersData);
   }
 
   public deleteUser(rollNumber: number) {
