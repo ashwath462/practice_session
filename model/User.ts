@@ -18,10 +18,4 @@ export class User {
     this.rollNumber = rollNumber;
     this.courses = courses;
   }
-
-  public displayUserDetails() {
-    console.log(
-      `${this.name},${this.rollNumber},${this.age},${this.address},${this.courses}                                     `
-    );
-  }
 }

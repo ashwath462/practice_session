@@ -14,7 +14,11 @@ export class File {
   }
 
   public saveData(hashedUserData: string) {
-    fsPromise.writeFileSync("./database/db.txt", hashedUserData);
-    return true;
+    if(hashedUserData.length>=1){
+        fsPromise.writeFileSync("./database/db.txt", hashedUserData);
+        return true;
+    } else{
+        throw new Error('Empty file! kindly enter user details to save.');
+    }
   }
 }

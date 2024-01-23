@@ -6,7 +6,9 @@ test('taking input', ()=>{
     const testCases = ['hello','how are you', 'Ashwath Arora','Assignment 2'];
     testCases.forEach((testcase)=>{
         const mockReadLine = vi.spyOn(utility,'input').mockReturnValueOnce(testcase);
-        expect(utility.input(testcase)).toBe(testcase);
+        expect(utility.input(
+            ' '
+        )).toBe(testcase);
     })
 })
 
@@ -76,21 +78,21 @@ test('validate Address Correct', ()=>{
 
 test('validate Roll Number Correct',() => {
     let testCases = [
-        ["0009",9],
-        ["    10",10],
-        ["       8  ",8],
-        [" 35 ", 35],
-        [" 35356 ", 35356],
-        [" 3555 ", 3555],
-        [" 10009 ", 10009],
+        ["0009",false,9],
+        ["    10",false,10],
+        ["       8  ",false,8],
+        [" 35 ",false, 35],
+        [" 35356 ",false, 35356],
+        [" 3555 ",true, 3555],
+        [" 10009 ",true, 10009],
     ]
-    testCases.forEach((testcase)=>{
-        expect(validateRollNumber(testcase[0])).toBe(testcase[1]);
+    testCases.forEach((testcase:any)=>{
+        expect(validateRollNumber(testcase[0],testcase[1])).toBe(testcase[2]);
     })
 })
 
 test('validate Roll Number Error',() => {
-    let testCases = ["12.3456","12M","0","-89"]
+    let testCases = ["12.3456","12M","0","-89","109"]
     testCases.forEach((testcase)=>{
         expect(()=>validateRollNumber(testcase)).toThrowError();
     })

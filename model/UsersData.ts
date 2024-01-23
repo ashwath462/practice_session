@@ -50,7 +50,7 @@ export class UsersData {
       console.log(
         columnWidths
           .map((width, index) => {
-            if (headers[index] === "Courses") {
+            if (headers[index] === "courses") {
               return (user as any)[headers[index]].join(", ").padEnd(width);
             } else {
               return String((user as any)[headers[index]]).padEnd(width);
@@ -59,11 +59,12 @@ export class UsersData {
           .join(" | ")
       );
     });
+    return true;
   }
 
-  public sortByName(usersData: any, descOrder: number = 0) {
+  public sortByName(usersData: any, descOrder: boolean = false) {
     usersData.sort((a: any, b: any) => {
-      if (descOrder == 1) {
+      if (descOrder) {
         const nameComparison = b.name.localeCompare(a.name);
         return nameComparison !== 0
           ? nameComparison
@@ -79,16 +80,16 @@ export class UsersData {
 
   public sortByRoleNumber(usersData: any, descOrder: boolean = false) {
     usersData.sort((a: any, b: any) => {
-      if (descOrder) return b.rollNumber.localeCompare(a.rollNumber);
-      return a.rollNumber.localeCompare(b.rollNumber);
+      if (descOrder) return b.rollNumber - a.rollNumber;
+      return a.rollNumber - b.rollNumber;
     });
     return usersData;
   }
 
   public sortByAge(usersData: any, descOrder: boolean = false) {
     usersData.sort((a: any, b: any) => {
-      if (descOrder) return b.age.localeCompare(a.age);
-      return a.age.localeCompare(b.age);
+      if (descOrder) return b.age - a.age;
+      return a.age - b.age;
     });
     return usersData;
   }
@@ -104,6 +105,7 @@ export class UsersData {
   public appendUser(userInput: User) {
     this.usersData.push(userInput);
     this.sortByName(this.usersData);
+    return true;
   }
 
   public deleteUser(rollNumber: number) {
