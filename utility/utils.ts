@@ -1,3 +1,5 @@
+import * as fsPromise from 'fs';
+import { UsersData } from '../model/UsersData';
 import { onlyLettersAndSpaces } from "./constants";
 
 export function validateName(userInput: any): string {
@@ -25,7 +27,7 @@ export function validateAge(userInput:any): number{
     return age;
 }
 
-export function validateRollNumber(userInput:any): number{
+export function validateRollNumber(userInput:any, toDelete:boolean = false): number{
     if(isNaN(userInput)){
         throw new Error('Kindly enter a numeric value!');
     }
@@ -35,6 +37,14 @@ export function validateRollNumber(userInput:any): number{
     }
     if(rollNumber<=0 || rollNumber>=100000){
         throw new Error('Age can only be between 1-99999')
+    }
+    if(toDelete){
+        return rollNumber;
+    }
+    const data = new UsersData().getUserData();
+    const indexToRemove = data.findIndex((user:any) => user.rollNumber === rollNumber);
+    if (indexToRemove !== -1) {
+        throw new Error(`User with roll number ${rollNumber} already exist`);
     }
     return rollNumber;
 }

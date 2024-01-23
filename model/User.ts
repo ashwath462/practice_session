@@ -14,13 +14,6 @@ export class User{
     }
 
     public displayUserDetails(){
-        console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
-        console.log('Name                     Roll Number     Age      Address                                 Courses                                                  ');
-        console.log('---------------------------------------------------------------------------------------------------------------------------------------------');
-        console.log(`${this.name}               ${this.rollNumber}       ${this.age}      ${this.address}                                 ${this.courses}                                     `);
-    }
-
-    public getRollNumber(){
-        return this.rollNumber;
+        console.log(`${this.name},${this.rollNumber},${this.age},${this.address},${this.courses}                                     `);
     }
 }

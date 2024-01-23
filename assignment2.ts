@@ -7,50 +7,35 @@ import {
   validateCourses,
 } from "./utility/utils";
 import { input } from "./utility/constants";
-import * as fsPromise from 'fs';
 import { File } from "./model/File";
-
-
+import { UsersData } from "./model/UsersData";
 
 let flag = true;
-let user: User | null = null;
+const userStore = new UsersData();
 console.log(
   "<-------------------------------------- Welcome to our application -------------------------------------->"
 );
-const file = File.getInstance();
 console.clear();
-console.log(
-  "Menu : \n1. Add User details. \n2. Display User details. \n3. Delete User detils. \n4. Save User details. \n5. Exit"
-);
 while (flag) {
+  console.log(
+    "Menu : \n1. Add User details. \n2. Display User details. \n3. Delete User detils. \n4. Save User details. \n5. Exit"
+  );
   const inputChoice = input("Enter a choice form menu (1-5) : ");
   switch (inputChoice) {
     case "1":
-      user = addUserDetails();
+      addUserDetails();
       break;
     case "2":
-      if (user != null) {
-        user.displayUserDetails();
-      } else {
-        console.log("No user details found");
-      }
+      userStore.displayUserDetails();
       break;
     case "3":
       const rollNumber = validateRollNumber(
         input("Enter roll number to be deleted : ")
-      );
-      file.deleteUser(rollNumber);
+      , true);
+      userStore.deleteUser(rollNumber);
       break;
     case "4":
-      if (user != null) {
-        try{
-          file.saveUser(user);
-        } catch(err:any){
-          console.log(err.message);
-        }
-      } else {
-        console.log("No user details found");
-      }
+      userStore.saveData();
       break;
     case "5":
       console.log("Have a good day!");
@@ -60,7 +45,6 @@ while (flag) {
       console.log("Invalid input. Try Again!\n");
   }
 }
-console.log(file.getAllUsers());
 
 
 function addUserDetails() {
@@ -74,7 +58,8 @@ function addUserDetails() {
       const courses = validateCourses(
         input("Set of courses (comma seperated 4 values) : ")
       );
-      return new User(name, age, address, rollNumber, courses);
+      userStore.appendUser(new User(name, age, address, rollNumber, courses));
+      return;
     } catch (error: any) {
       console.log(error.message);
       console.log("Try Again!\n");
