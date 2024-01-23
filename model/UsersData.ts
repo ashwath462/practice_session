@@ -21,15 +21,15 @@ export class UsersData {
     return this.usersData;
   }
 
-  public displayUserDetails(inputChoice:number,flag:boolean) {
+  public displayUserDetails(inputChoice:number,sortOrder:boolean) {
     if(inputChoice == 1){
-      this.sortByName(this.usersData,flag);
+      this.usersData = this.sortByName(this.usersData,sortOrder);
     }else if(inputChoice == 2){
-      this.sortByRoleNumber(this.usersData,flag);
+      this.usersData = this.sortByRoleNumber(this.usersData,sortOrder);
     }else if(inputChoice == 3){
-      this.sortByAge(this.usersData, flag);
+      this.usersData = this.sortByAge(this.usersData, sortOrder);
     }else {
-      this.sortByAddress(this.usersData,flag);
+      this.usersData = this.sortByAddress(this.usersData,sortOrder);
     }
     const headers = ["name", "age", "address", "rollNumber", "courses"];
     // Find maximum width for each column
@@ -86,7 +86,7 @@ export class UsersData {
         ? nameComparison
         : a.rollNumber - b.rollNumber;
     });
-    return this.usersData = usersData;
+    return usersData;
   }
 
   public sortByRoleNumber(usersData: any, descOrder: boolean = false) {
@@ -94,7 +94,7 @@ export class UsersData {
       if (descOrder) return b.rollNumber - a.rollNumber;
       return a.rollNumber - b.rollNumber;
     });
-    return this.usersData = usersData;
+    return usersData;
   }
 
   public sortByAge(usersData: any, descOrder: boolean = false) {
@@ -102,7 +102,7 @@ export class UsersData {
       if (descOrder) return b.age - a.age;
       return a.age - b.age;
     });
-    return this.usersData = usersData;
+    return usersData;
   }
 
   public sortByAddress(usersData: any, descOrder: boolean = false) {
@@ -110,7 +110,7 @@ export class UsersData {
       if (descOrder) return b.address.localeCompare(a.address);
       return a.address.localeCompare(b.address);
     });
-    return this.usersData = usersData;
+    return usersData;
   }
 
   public appendUser(userInput: User) {
@@ -142,7 +142,6 @@ export class UsersData {
       user = user.toString("base64");
       hashedUserData += "," + user;
     });
-
     // Save data to disk
     const file = File.getInstance();
     file.saveData(hashedUserData);

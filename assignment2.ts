@@ -28,17 +28,17 @@ while (flag) {
     case "2":
       console.clear();
       const inputChoice = sortUserChoice(input("Sort user by : \n1. Name \n2. Roll Number \n3. Age \n4. Address\n"));
-      let flag:any = input('1. Ascending\n2. Descending\n');
+      let sortOrder:any = input('1. Ascending\n2. Descending\n');
       console.clear();
-      if(flag == '1' || flag == '2'){
-        flag = (flag == '1'? false:true);
+      if(sortOrder == '1' || sortOrder == '2'){
+        sortOrder = (sortOrder == '1'? false:true);
       }
       else{
         console.log('Enter a valid input!');
         break;
       }
-      console.log(inputChoice,flag);
-      userStore.displayUserDetails(inputChoice,flag);
+      console.log(inputChoice,sortOrder);
+      userStore.displayUserDetails(inputChoice,sortOrder);
       break;
     case "3":
       const rollNumber = validateRollNumber(
