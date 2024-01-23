@@ -88,3 +88,11 @@ export function validateCourses(userInput: any): string[] {
   });
   return courses;
 }
+
+export function sortUserChoice(userInput:any){
+  userInput = Number(userInput);
+  if(!isNaN(userInput) && userInput>=1 && userInput<=4 && userInput%1 == 0){
+    return userInput;
+  }
+  else throw new Error('Kindly enter a valid input!')
+}

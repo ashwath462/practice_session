@@ -1,6 +1,7 @@
 import * as fsPromise from "fs";
 import { User } from "./User";
 import { File } from "./File";
+import { input } from "../utility/constants";
 
 export class UsersData {
   public usersData: User[];
@@ -19,7 +20,17 @@ export class UsersData {
   public getUserData() {
     return this.usersData;
   }
-  public displayUserDetails() {
+
+  public displayUserDetails(inputChoice:number,flag:boolean) {
+    if(inputChoice == 1){
+      this.sortByName(this.usersData,flag);
+    }else if(inputChoice == 2){
+      this.sortByRoleNumber(this.usersData,flag);
+    }else if(inputChoice == 3){
+      this.sortByAge(this.usersData, flag);
+    }else {
+      this.sortByAddress(this.usersData,flag);
+    }
     const headers = ["name", "age", "address", "rollNumber", "courses"];
     // Find maximum width for each column
     const columnWidths = headers.map((header, index) => {
@@ -75,7 +86,7 @@ export class UsersData {
         ? nameComparison
         : a.rollNumber - b.rollNumber;
     });
-    return usersData;
+    return this.usersData = usersData;
   }
 
   public sortByRoleNumber(usersData: any, descOrder: boolean = false) {
@@ -83,7 +94,7 @@ export class UsersData {
       if (descOrder) return b.rollNumber - a.rollNumber;
       return a.rollNumber - b.rollNumber;
     });
-    return usersData;
+    return this.usersData = usersData;
   }
 
   public sortByAge(usersData: any, descOrder: boolean = false) {
@@ -91,7 +102,7 @@ export class UsersData {
       if (descOrder) return b.age - a.age;
       return a.age - b.age;
     });
-    return usersData;
+    return this.usersData = usersData;
   }
 
   public sortByAddress(usersData: any, descOrder: boolean = false) {
@@ -99,12 +110,11 @@ export class UsersData {
       if (descOrder) return b.address.localeCompare(a.address);
       return a.address.localeCompare(b.address);
     });
-    return usersData;
+    return this.usersData = usersData;
   }
 
   public appendUser(userInput: User) {
     this.usersData.push(userInput);
-    this.sortByName(this.usersData);
     return true;
   }
 
