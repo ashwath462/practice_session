@@ -7,7 +7,6 @@ import {
   validateCourses,
 } from "./utility/utils";
 import { input } from "./utility/constants";
-import { File } from "./model/File";
 import { UsersData } from "./model/UsersData";
 
 let flag = true;
