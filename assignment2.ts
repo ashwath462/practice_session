@@ -29,8 +29,9 @@ while (flag) {
       break;
     case "3":
       const rollNumber = validateRollNumber(
-        input("Enter roll number to be deleted : ")
-      , true);
+        input("Enter roll number to be deleted : "),
+        true
+      );
       userStore.deleteUser(rollNumber);
       break;
     case "4":
@@ -45,23 +46,20 @@ while (flag) {
   }
 }
 
-
 function addUserDetails() {
   console.log("Kindly enter the following details about user : ");
-  while (true) {
-    try {
-      const name = validateName(input("Full Name (space seperated): "));
-      const age = validateAge(input("Age : "));
-      const address = validateAddress(input("Address : "));
-      const rollNumber = validateRollNumber(input("Roll Number: "));
-      const courses = validateCourses(
-        input("Set of courses (comma seperated 4 values) : ")
-      );
-      userStore.appendUser(new User(name, age, address, rollNumber, courses));
-      return;
-    } catch (error: any) {
-      console.log(error.message);
-      console.log("Try Again!\n");
-    }
+  try {
+    const name = validateName(input("Full Name (space seperated): "));
+    const age = validateAge(input("Age : "));
+    const address = validateAddress(input("Address : "));
+    const rollNumber = validateRollNumber(input("Roll Number: "));
+    const courses = validateCourses(
+      input("Set of courses (comma seperated 4 values) : ")
+    );
+    userStore.appendUser(new User(name, age, address, rollNumber, courses));
+    return;
+  } catch (error: any) {
+    console.log(error.message);
+    console.log("Try Again!\n");
   }
 }
