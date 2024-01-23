@@ -1,9 +1,9 @@
 import * as fsPromise from "fs";
 import { UsersData } from "../model/UsersData";
-import { onlyLettersAndSpaces } from "./constants";
+import { onlyLettersAndSpacesRegex } from "./constants";
 
 export function validateName(userInput: any): string {
-  if (!userInput.match(onlyLettersAndSpaces)) {
+  if (!userInput.match(onlyLettersAndSpacesRegex)) {
     throw new Error("Name can't contain digits or special characters!");
   }
   userInput = userInput
