@@ -71,7 +71,7 @@ test('sort users by name', ()=>{
     ];
 
     testCases.forEach((testcase:any)=>{
-        expect(Users.sortByName(testcase[0],testcase[1])).toStrictEqual(testcase[2]);
+        expect(Users.sortUsers(testcase[0],testcase[1])).toStrictEqual(testcase[2]);
     })
 })
 
@@ -203,7 +203,7 @@ test('sort users by roll number', ()=>{
     ];
 
     testCases.forEach((testcase:any)=>{
-        expect(Users.sortByRoleNumber(testcase[0],testcase[1])).toStrictEqual(testcase[2]);
+        expect(Users.sortUsers(testcase[0],testcase[1],"rollNumber")).toStrictEqual(testcase[2]);
     })
 })
 
@@ -284,12 +284,12 @@ test('sort users by age', ()=>{
     ];
 
     testCases.forEach((testcase:any)=>{
-        expect(Users.sortByAge(testcase[0],testcase[1])).toStrictEqual(testcase[2]);
+        expect(Users.sortUsers(testcase[0],testcase[1],"age")).toStrictEqual(testcase[2]);
     })
 })
 
 
-test('sort users by age', ()=>{
+test('sort users by address', ()=>{
     const testCases = [
         [[
             {
@@ -378,6 +378,6 @@ test('sort users by age', ()=>{
     ];
 
     testCases.forEach((testcase:any)=>{
-        expect(Users.sortByAddress(testcase[0],testcase[1])).toStrictEqual(testcase[2]);
+        expect(Users.sortUsers(testcase[0],testcase[1],"address")).toStrictEqual(testcase[2]);
     })
 })

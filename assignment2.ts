@@ -5,7 +5,7 @@ import {
   validateAddress,
   validateRollNumber,
   validateCourses,
-  sortUserChoice,
+  sortBy,
 } from "./utility/utils";
 import { input } from "./utility/constants";
 import { UsersData } from "./model/UsersData";
@@ -27,7 +27,7 @@ while (flag) {
       break;
     case "2":
       console.clear();
-      const inputChoice = sortUserChoice(input("Sort user by : \n1. Name \n2. Roll Number \n3. Age \n4. Address\n"));
+      const inputChoice = sortBy(input("Sort user by : \n1. Name \n2. Roll Number \n3. Age \n4. Address\n"));
       let sortOrder:any = input('1. Ascending\n2. Descending\n');
       console.clear();
       if(sortOrder == '1' || sortOrder == '2'){
@@ -51,6 +51,19 @@ while (flag) {
       userStore.saveData();
       break;
     case "5":
+      console.clear();
+      console.log('Do you want to save your changes? (Y / N)\n')
+      while(true){
+        const choice = input("");
+        if(choice == 'Y' || choice == 'y'){
+          userStore.saveData();
+          break;
+        }
+        else if(choice == 'N' || choice == 'n'){
+          break;
+        }
+        else console.log('Please enter a valid input!')
+      }
       console.log("Have a good day!");
       flag = false;
       break;

@@ -23,55 +23,36 @@ export class UsersData {
   }
 
   public displayUserDetails(inputChoice:number,sortOrder:boolean) {
-    if(inputChoice == 1){
-      this.usersData = this.sortByName(this.usersData,sortOrder);
-    }else if(inputChoice == 2){
-      this.usersData = this.sortByRoleNumber(this.usersData,sortOrder);
-    }else if(inputChoice == 3){
-      this.usersData = this.sortByAge(this.usersData, sortOrder);
-    }else {
-      this.usersData = this.sortByAddress(this.usersData,sortOrder);
-    }
-    const headers = ["name", "age", "address", "rollNumber", "courses"];
+    const headers = ["name", "rollNumber", "age", "address", "courses"];
+    this.usersData = this.sortUsers(this.usersData,sortOrder,headers[inputChoice-1]);
     return printUsersTable(headers,this.usersData);
   }
 
-  public sortByName(usersData: any, descOrder: boolean = false) {
+  public sortUsers(usersData: any, descOrder: boolean = false, type: string = "name") {
     usersData.sort((a: any, b: any) => {
-      if (descOrder) {
-        const nameComparison = b.name.localeCompare(a.name);
-        return nameComparison !== 0
-          ? nameComparison
-          : b.rollNumber - a.rollNumber;
+      switch (type){
+        case "age":
+          if (descOrder) return b.age - a.age;
+          return a.age - b.age;
+        case "rollNumber":
+          if (descOrder) return b.rollNumber - a.rollNumber;
+          return a.rollNumber - b.rollNumber;
+        case "address":
+          if (descOrder) return b.address.localeCompare(a.address);
+          return a.address.localeCompare(b.address);
+        default:
+          if (descOrder) {
+            const nameComparison = b.name.localeCompare(a.name);
+            return nameComparison !== 0
+              ? nameComparison
+              : b.rollNumber - a.rollNumber;
+          } else{
+            const nameComparison = a.name.localeCompare(b.name);
+            return nameComparison !== 0
+              ? nameComparison
+              : a.rollNumber - b.rollNumber;
+          }
       }
-      const nameComparison = a.name.localeCompare(b.name);
-      return nameComparison !== 0
-        ? nameComparison
-        : a.rollNumber - b.rollNumber;
-    });
-    return usersData;
-  }
-
-  public sortByRoleNumber(usersData: any, descOrder: boolean = false) {
-    usersData.sort((a: any, b: any) => {
-      if (descOrder) return b.rollNumber - a.rollNumber;
-      return a.rollNumber - b.rollNumber;
-    });
-    return usersData;
-  }
-
-  public sortByAge(usersData: any, descOrder: boolean = false) {
-    usersData.sort((a: any, b: any) => {
-      if (descOrder) return b.age - a.age;
-      return a.age - b.age;
-    });
-    return usersData;
-  }
-
-  public sortByAddress(usersData: any, descOrder: boolean = false) {
-    usersData.sort((a: any, b: any) => {
-      if (descOrder) return b.address.localeCompare(a.address);
-      return a.address.localeCompare(b.address);
     });
     return usersData;
   }
@@ -95,10 +76,9 @@ export class UsersData {
   }
 
   public saveData() {
-    this.sortByName(this.usersData);
+    this.sortUsers(this.usersData);
     //hashing of data
     let hashedUserData: any = "";
-    this.sortByName(this.usersData);
     this.usersData.map((user: any) => {
       user = JSON.stringify(user);
       user = Buffer.from(user, "utf8");
