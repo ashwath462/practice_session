@@ -5,5 +5,5 @@ export function input(message: string) {
   return userInput;
 }
 
-export const onlyLettersAndSpaces = /^[A-Za-z\s]*$/;
+export const onlyLettersAndSpacesRegex = /^[A-Za-z\s]*$/;
 export const DATABASE_FILE = './database/db.txt'

@@ -122,8 +122,20 @@ test('delete user error', ()=>{
 })
 
 test('Save and Display data', ()=>{
+    const testCases = [
+        [1,true],
+        [1,false],
+        [2,true],
+        [2,false],
+        [3,true],
+        [3,false],
+        [4,true],
+        [4,false],
+    ]
     expect(Users.saveData()).toBe(true);
-    expect(Users.displayUserDetails()).toBe(true);
+    testCases.forEach((testcase:any)=>{
+        expect(Users.displayUserDetails(testcase[0],testcase[1])).toBe(true);
+    })
 })
 
 test('sort users by roll number', ()=>{

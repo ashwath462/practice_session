@@ -5,6 +5,7 @@ import {
   validateAddress,
   validateRollNumber,
   validateCourses,
+  sortUserChoice,
 } from "./utility/utils";
 import { input } from "./utility/constants";
 import { UsersData } from "./model/UsersData";
@@ -25,7 +26,19 @@ while (flag) {
       addUserDetails();
       break;
     case "2":
-      userStore.displayUserDetails();
+      console.clear();
+      const inputChoice = sortUserChoice(input("Sort user by : \n1. Name \n2. Roll Number \n3. Age \n4. Address\n"));
+      let sortOrder:any = input('1. Ascending\n2. Descending\n');
+      console.clear();
+      if(sortOrder == '1' || sortOrder == '2'){
+        sortOrder = (sortOrder == '1'? false:true);
+      }
+      else{
+        console.log('Enter a valid input!');
+        break;
+      }
+      console.log(inputChoice,sortOrder);
+      userStore.displayUserDetails(inputChoice,sortOrder);
       break;
     case "3":
       const rollNumber = validateRollNumber(

@@ -92,7 +92,7 @@ test('validate Roll Number Correct',() => {
 })
 
 test('validate Roll Number Error',() => {
-    let testCases = ["12.3456","12M","0","-89","109"]
+    let testCases = ["12.3456","12M","0","-89","1"]
     testCases.forEach((testcase)=>{
         expect(()=>validateRollNumber(testcase)).toThrowError();
     })

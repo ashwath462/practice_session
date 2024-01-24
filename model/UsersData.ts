@@ -21,8 +21,17 @@ export class UsersData {
   public getUserData() {
     return this.usersData;
   }
-  
-  public displayUserDetails() {
+
+  public displayUserDetails(inputChoice:number,sortOrder:boolean) {
+    if(inputChoice == 1){
+      this.usersData = this.sortByName(this.usersData,sortOrder);
+    }else if(inputChoice == 2){
+      this.usersData = this.sortByRoleNumber(this.usersData,sortOrder);
+    }else if(inputChoice == 3){
+      this.usersData = this.sortByAge(this.usersData, sortOrder);
+    }else {
+      this.usersData = this.sortByAddress(this.usersData,sortOrder);
+    }
     const headers = ["name", "age", "address", "rollNumber", "courses"];
     return printUsersTable(headers,this.usersData);
   }
@@ -69,7 +78,6 @@ export class UsersData {
 
   public appendUser(userInput: User) {
     this.usersData.push(userInput);
-    this.sortByName(this.usersData);
     return true;
   }
 
@@ -97,7 +105,6 @@ export class UsersData {
       user = user.toString("base64");
       hashedUserData += "," + user;
     });
-
     // Save data to disk
     const file = File.getInstance();
     file.saveData(hashedUserData);

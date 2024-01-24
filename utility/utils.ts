@@ -32,9 +32,11 @@ export function validateAge(userInput: any): number {
   return age;
 }
 
-function userAlreadyExists(rollNumber: number): number {
+function userAlreadyExists(rollNumber:number){
   const data = new UsersData().getUserData();
-  const user = data.findIndex((user: any) => user.rollNumber === rollNumber);
+  const user = data.findIndex(
+    (user: any) => user.rollNumber === rollNumber
+  );
   if (user !== -1) {
     throw new Error(`User with roll number ${rollNumber} already exist`);
   }
@@ -91,7 +93,7 @@ export function validateCourses(userInput: any): string[] {
   return courses;
 }
 
-export function printUsersTable(headers: string[], usersData: any) {
+export function printUsersTable(headers:string[], usersData:any){
   // Find maximum width for each column
   const columnWidths = headers.map((header, index) => {
     const maxWidth = Math.max(
@@ -108,7 +110,9 @@ export function printUsersTable(headers: string[], usersData: any) {
   });
   // Display column headers
   console.log(
-    columnWidths.map((width, index) => headers[index].padEnd(width)).join(" | ")
+    columnWidths
+      .map((width, index) => headers[index].padEnd(width))
+      .join(" | ")
   );
   // Display separator line
   console.log(
@@ -129,4 +133,12 @@ export function printUsersTable(headers: string[], usersData: any) {
     );
   });
   return true;
+}
+
+export function sortUserChoice(userInput:any){
+  userInput = Number(userInput);
+  if(!isNaN(userInput) && userInput>=1 && userInput<=4 && userInput%1 == 0){
+    return userInput;
+  }
+  else throw new Error('Kindly enter a valid input!')
 }
