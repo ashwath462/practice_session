@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 import { File } from "../../model/File";
 import * as fsPromise from 'fs';
+import { DATABASE_FILE } from "../../utility/constants";
 
 test('get Instance check', ()=>{
     const instance = File.getInstance();
@@ -8,7 +9,7 @@ test('get Instance check', ()=>{
 })
 
 test('Save data',()=>{ 
-    const userData = fsPromise.readFileSync("./database/db.txt", "utf8");
+    const userData = fsPromise.readFileSync(DATABASE_FILE, "utf8");
     const file = File.getInstance();
     expect(file.saveData(userData)).toBe(true);
 })

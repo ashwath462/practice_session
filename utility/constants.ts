@@ -6,3 +6,4 @@ export function input(message: string) {
 }
 
 export const onlyLettersAndSpaces = /^[A-Za-z\s]*$/;
+export const DATABASE_FILE = './database/db.txt'

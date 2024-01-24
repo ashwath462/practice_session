@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 import { User } from "../../model/User";
 import { UsersData } from "../../model/UsersData";
 import * as fsPromise from 'fs';
+import { DATABASE_FILE } from "../../utility/constants";
 
 const Users = new UsersData();
 
@@ -75,7 +76,7 @@ test('sort users by name', ()=>{
 })
 
 test('get all users', ()=>{
-    const data = fsPromise.readFileSync('./database/db.txt','utf8');
+    const data = fsPromise.readFileSync(DATABASE_FILE,'utf8');
     let allUsers:any = data.split(',').slice(1);
 
     allUsers = allUsers.map((element:any)=>{

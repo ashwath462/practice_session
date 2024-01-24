@@ -1,12 +1,14 @@
 import * as fsPromise from "fs";
 import { User } from "./User";
 import { File } from "./File";
+import { DATABASE_FILE } from "../utility/constants";
+import { printUsersTable } from "../utility/utils";
 
 export class UsersData {
-  public usersData: User[];
+  private usersData: User[];
   constructor() {
     //Loading data from disk to in-memory
-    const data = fsPromise.readFileSync("./database/db.txt", "utf8");
+    const data = fsPromise.readFileSync(DATABASE_FILE, "utf8");
     let allUsers: any = data.split(",").slice(1);
 
     allUsers = allUsers.map((element: any) => {
@@ -19,47 +21,10 @@ export class UsersData {
   public getUserData() {
     return this.usersData;
   }
+  
   public displayUserDetails() {
     const headers = ["name", "age", "address", "rollNumber", "courses"];
-    // Find maximum width for each column
-    const columnWidths = headers.map((header, index) => {
-      const maxWidth = Math.max(
-        header.length,
-        ...this.usersData.map((user: any) => {
-          if (header === "courses") {
-            return user[header].join(", ").length;
-          } else {
-            return String((user as any)[header]).length;
-          }
-        })
-      );
-      return maxWidth + 2; // Add padding for better readability
-    });
-    // Display column headers
-    console.log(
-      columnWidths
-        .map((width, index) => headers[index].padEnd(width))
-        .join(" | ")
-    );
-    // Display separator line
-    console.log(
-      "-".repeat(columnWidths.reduce((sum, width) => sum + width + 3, 0))
-    );
-    // Display user data
-    this.usersData.forEach((user: any) => {
-      console.log(
-        columnWidths
-          .map((width, index) => {
-            if (headers[index] === "courses") {
-              return (user as any)[headers[index]].join(", ").padEnd(width);
-            } else {
-              return String((user as any)[headers[index]]).padEnd(width);
-            }
-          })
-          .join(" | ")
-      );
-    });
-    return true;
+    return printUsersTable(headers,this.usersData);
   }
 
   public sortByName(usersData: any, descOrder: boolean = false) {

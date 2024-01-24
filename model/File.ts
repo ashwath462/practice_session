@@ -1,5 +1,6 @@
 import * as fsPromise from "fs";
 import { User } from "./User";
+import { DATABASE_FILE } from "../utility/constants";
 
 export class File {
   private static instance: File;
@@ -15,7 +16,7 @@ export class File {
 
   public saveData(hashedUserData: string) {
     if(hashedUserData.length>=1){
-        fsPromise.writeFileSync("./database/db.txt", hashedUserData);
+        fsPromise.writeFileSync(DATABASE_FILE, hashedUserData);
         return true;
     } else{
         throw new Error('Empty file! kindly enter user details to save.');

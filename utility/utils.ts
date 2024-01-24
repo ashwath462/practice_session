@@ -32,6 +32,15 @@ export function validateAge(userInput: any): number {
   return age;
 }
 
+function userAlreadyExists(rollNumber: number): number {
+  const data = new UsersData().getUserData();
+  const user = data.findIndex((user: any) => user.rollNumber === rollNumber);
+  if (user !== -1) {
+    throw new Error(`User with roll number ${rollNumber} already exist`);
+  }
+  return rollNumber;
+}
+
 export function validateRollNumber(
   userInput: any,
   toDelete: boolean = false
@@ -49,14 +58,7 @@ export function validateRollNumber(
   if (toDelete) {
     return rollNumber;
   }
-  const data = new UsersData().getUserData();
-  const indexToRemove = data.findIndex(
-    (user: any) => user.rollNumber === rollNumber
-  );
-  if (indexToRemove !== -1) {
-    throw new Error(`User with roll number ${rollNumber} already exist`);
-  }
-  return rollNumber;
+  return userAlreadyExists(rollNumber);
 }
 
 export function validateAddress(userInput: string) {
@@ -87,4 +89,44 @@ export function validateCourses(userInput: any): string[] {
     }
   });
   return courses;
+}
+
+export function printUsersTable(headers: string[], usersData: any) {
+  // Find maximum width for each column
+  const columnWidths = headers.map((header, index) => {
+    const maxWidth = Math.max(
+      header.length,
+      ...usersData.map((user: any) => {
+        if (header === "courses") {
+          return user[header].join(", ").length;
+        } else {
+          return String((user as any)[header]).length;
+        }
+      })
+    );
+    return maxWidth + 2; // Add padding for better readability
+  });
+  // Display column headers
+  console.log(
+    columnWidths.map((width, index) => headers[index].padEnd(width)).join(" | ")
+  );
+  // Display separator line
+  console.log(
+    "-".repeat(columnWidths.reduce((sum, width) => sum + width + 3, 0))
+  );
+  // Display user data
+  usersData.forEach((user: any) => {
+    console.log(
+      columnWidths
+        .map((width, index) => {
+          if (headers[index] === "courses") {
+            return (user as any)[headers[index]].join(", ").padEnd(width);
+          } else {
+            return String((user as any)[headers[index]]).padEnd(width);
+          }
+        })
+        .join(" | ")
+    );
+  });
+  return true;
 }
