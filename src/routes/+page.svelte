@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    import FlightDetails from "$lib/components/FlightDetails.svelte"
+    import SearchCards from "$lib/components/LandingPage/SearchCards.svelte";
+</script>
+
+
+<FlightDetails/>
+<SearchCards title={"Upcoming Flights"}/>
+<SearchCards/>
