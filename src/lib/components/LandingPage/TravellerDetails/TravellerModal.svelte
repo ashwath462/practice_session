@@ -3,9 +3,6 @@
 	let adultTravellers = 1,
 		childrenTravellers = 0,
 		infantTravellers = 0;
-
-    // @ts-ignore
-    const closeModal = ()=>document.getElementById('travelModal').close();
 </script>
 
 <dialog id="travelModal" class="modal modal-bottom">
