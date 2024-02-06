@@ -1,6 +1,6 @@
 <script>
     import DateSelector from "$lib/components/LandingPage/DateSelector.svelte";
-	import TravellerDetails from "$lib/components/LandingPage/TravellerDetails.svelte";
+	  import TravellerDetails from "$lib/components/LandingPage/TravellerDetails/TravellerDetails.svelte";
     import SearchFlightButton from "$lib/components/LandingPage/SearchFlightButton.svelte";
 </script>
 
@@ -13,4 +13,4 @@
       <span class="label-text cursor-pointer"> Show only non-stop flights</span> 
     </div>
   </div>
-<SearchFlightButton/>
+<SearchFlightButton type="Search Flight"/>

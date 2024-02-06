@@ -1,9 +1,11 @@
 <script>
     import "../app.css";
-    import Navbar from "$lib/components/Navbar.svelte";
-    import Footer from "$lib/components/Footer.svelte";
+    import Navbar from "$lib/components/Navbar/Navbar.svelte";
+    import Footer from "$lib/components/Footer/Footer.svelte";
 </script>
 
-<Navbar/>
-<slot />
-<Footer/>
+<div class="bg-slate-200 min-h-[100vh]">
+    <Navbar/>
+        <slot />
+    <Footer/>
+</div>

@@ -3,7 +3,7 @@
 </script>
 
 
-<div class="card bg-base-100 shadow-xl w-full cursor-pointer">
+<div class="card bg-base-100 w-full cursor-pointer !rounded-md">
     <div class="flex justify-between p-2 max-w-[700px] min-w-[270px]">
         <div class="m-auto">
             img

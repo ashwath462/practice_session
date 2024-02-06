@@ -3,8 +3,8 @@
 </script>
 
 
-<div class="navbar justify-between bg-sky-400 text-white font-bold">
-    <div>Flights</div>
+<div class="navbar justify-between bg-sky-500 text-white font-bold">
+    <div class="text-xl">Flights</div>
     <div>
         <div class="">wallet</div>
         <div>coupon</div>
