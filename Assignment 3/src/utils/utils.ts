@@ -18,8 +18,8 @@ export const isValidCredInput = (
   if (!emailRegex.test(email)) {
     throw new Error("*Kindly check the mail entered!");
   }
-  if (password.length < 6) {
-    throw new Error("*Password length should be greater than or equal to 6!");
+  if (password.length < 6 && password.length > 20) {
+    throw new Error("*Password length must be between 6-20 characters!");
   }
   if (confirmPassword != undefined && confirmPassword != password) {
     throw new Error("*Confirm password didn't match password!");
