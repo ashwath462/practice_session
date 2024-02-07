@@ -3,19 +3,20 @@
 	import { goto } from '$app/navigation';
     import {auth} from '$lib/firebase/firebase'
 	import { user } from '$lib/store/store';
+  	import { deleteUserFromLocalStorage } from "../utils/utils";
 	export let buttonType = '';
 
 	const handleClick = ()=>{
 		if(buttonType === 'Logout'){
 			auth().signOut().then(()=>{
 				user.set({uid:'',email:''});
-				localStorage.removeItem("userId");
+				deleteUserFromLocalStorage();
 			})
 			goto('/login');
 		} else if(buttonType === 'Login'){
 			goto('/login');
 		} else{
-			goto('/');
+			goto('/register');
 		}
 	}
 </script>

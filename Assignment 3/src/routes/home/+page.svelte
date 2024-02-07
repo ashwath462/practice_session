@@ -4,30 +4,32 @@
 	import Navbar from '../../components/Navbar.svelte';
 	import TaskTable from '../../components/TaskTable.svelte';
 	import {toDoList, doneList, user} from '../../lib/store/store';
-	import { database } from '../../utils/utils';
+	import { getUserFromLocalStorage } from '../../utils/utils';
+	import { database, type taskType, type User } from '../../utils/Constant';
 	import { v4 as uuidv4 } from "uuid";
 	import { goto } from '$app/navigation';
+	import {ListTypes} from '../../utils/Constant';
 	
 	let task = '',
 	error = "",
-	list:any = [], 
-	otherList:any = [],
+	toDoTask:taskType[] = [], 
+	completedTask:taskType[] = [],
 	loading = true,
-	currentUser:any,
-	currentUserId:any;
+	currentUser:User,
+	currentUserId:string|null;
 
-	$: onMount(async ()=>{
-		currentUserId = localStorage.getItem('userId');
+	onMount(async ()=>{
+		currentUserId = getUserFromLocalStorage();
 		user.subscribe((value:any)=>{
 			currentUser = value;
 		})
 
 		toDoList.subscribe((value:any)=>{
-			list = value;
+			toDoTask = value;
 		})
 
 		doneList.subscribe((value:any)=>{
-			otherList = value;
+			completedTask = value;
 		})
 		setTimeout(()=>{
 			loading = false;
@@ -36,28 +38,28 @@
 	
 	const addTask = (): any => {
 		if (task.length >= 2 && task.length <= 250) {
-			console.log(list);
-			list = [...list, { id: uuidv4(), content: task, isComplete: false }];
-			console.log(list);
-			toDoList.set(list);
-			database.updateUserTasks(currentUser,list,otherList);
+			console.log(toDoTask);
+			toDoTask = [...toDoTask, { id: uuidv4(), content: task, isComplete: false }];
+			console.log(toDoTask);
+			toDoList.set(toDoTask);
+			database.updateUserTasks(currentUser,toDoTask,completedTask);
 			task = '';
 		} else if (task.length <= 1) error = '*Note : Task length cannot be empty or 1';
 		else error = '*Note : Task length cannot exceed 250 characters';
 	};
 
     const removeAllTasks = ()=>{
-		if(list.length>=1 || otherList.length>=1){
-			const choice = confirm('Deleting all task from list, click OK to confirm.');
+		if(toDoTask.length>=1 || completedTask.length>=1){
+			const choice = confirm('Deleting all task from toDoTask, click OK to confirm.');
             if (choice) {
-				list = [];
-				otherList = [];
+				toDoTask = [];
+				completedTask = [];
 				toDoList.set([]);
                 doneList.set([]);
 				database.updateUserTasks(currentUser);
             }
         } else{
-			error = '*Note : No task in to-do list! Kindly add a task first.';
+			error = '*Note : No task in to-do toDoTask! Kindly add a task first.';
         }
     }
 
@@ -94,15 +96,14 @@
 	</div>
     <div class="text-center text-red-500 text-xl">{error}</div>
 	<div class="grid grid-cols-2 max-sm:grid-cols-1">
-		<TaskTable type="To-Do" />
-		<TaskTable type="Done"/>
+		<TaskTable type={ListTypes.ToDo} />
+		<TaskTable type={ListTypes.Completed}/>
 	</div>
 </div>
 {:else if (loading)}
 <div class="text-center text-red-500 text-xl"> Loading! </div>
 {currentUserId}
 {:else}
-	<div class="text-center text-red-500 text-xl"> Invalid credentials! </div>
-	<div class="text-center text-red-500 text-xl">Go back to <button class=" btn-ghost text-teal-400" on:click={()=>{setTimeout(() => goto('/login'), 0);}}>Login page</button>.</div> 
+	{goto('/login')}
 {/if}
 <svelte:window on:keydown={enterUser}/>

@@ -2,7 +2,7 @@
 	import '../../app.css';
 	import Navbar from '../../components/Navbar.svelte';
 	import { goto } from '$app/navigation';
-	import { database } from '../../utils/utils';
+	import { database } from '../../utils/Constant';
 	import { showPassword, isValidCredInput } from '../../utils/utils';
 	let email = '',
 		password = '',
