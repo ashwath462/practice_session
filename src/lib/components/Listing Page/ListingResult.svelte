@@ -1,6 +1,6 @@
 <script>
-	import Border from "../common/Border.svelte";
-	import FlightResultCard from "./FlightResultCard.svelte";
+	import Border from "../Common/Border.svelte";
+	import FlightResultCard from "./ListingCard.svelte";
 </script>
 
 

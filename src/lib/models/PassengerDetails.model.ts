@@ -1,4 +1,4 @@
-export class PassedngerDetails{
+export class PassengerDetails{
     private adultCount:number;
     private infantCount:number;
     private childCount:number;

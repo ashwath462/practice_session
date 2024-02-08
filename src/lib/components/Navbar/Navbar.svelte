@@ -1,6 +1,6 @@
 <script>
 	import Menu from "./Menu.svelte";
-    import ModifyModal from "../FlightSearchResult/ModifyModal.svelte";
+    import ModifyModal from "../Listing Page/ModifyModal.svelte";
 
     // @ts-ignore
     const showModal = ()=>document.getElementById('modifyFlightModal').showModal()

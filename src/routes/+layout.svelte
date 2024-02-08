@@ -6,6 +6,8 @@
 
 <div class="bg-slate-200 min-h-[100vh]">
     <Navbar/>
+    <div class="pb-12">
         <slot />
+    </div>
     <Footer/>
 </div>
