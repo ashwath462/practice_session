@@ -1,17 +1,16 @@
 <script>
-	import Border from "../Common/Border.svelte";
 	import ListingCard from "./ListingCard.svelte";
 </script>
 
 
 <div class="flex flex-col">
     <ListingCard/>
-    <Border/>
+    <div class="border-b-2 border-gray-300"></div>
     <ListingCard/>
-    <Border/>
+    <div class="border-b-2 border-gray-300"></div>
     <ListingCard/>
-    <Border/>
+    <div class="border-b-2 border-gray-300"></div>
     <ListingCard/>
-    <Border/>
+    <div class="border-b-2 border-gray-300"></div>
     <ListingCard/>
 </div>
