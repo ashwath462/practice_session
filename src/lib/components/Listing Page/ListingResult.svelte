@@ -1,17 +1,17 @@
 <script>
-	import Border from "$lib/components/Common/Border.svelte";
-	import FlightResultCard from "$lib/components/Listing Page/ListingCard.svelte";
+	import Border from "../Common/Border.svelte";
+	import ListingCard from "./ListingCard.svelte";
 </script>
 
 
 <div class="flex flex-col">
-    <FlightResultCard/>
+    <ListingCard/>
     <Border/>
-    <FlightResultCard/>
+    <ListingCard/>
     <Border/>
-    <FlightResultCard/>
+    <ListingCard/>
     <Border/>
-    <FlightResultCard/>
+    <ListingCard/>
     <Border/>
-    <FlightResultCard/>
+    <ListingCard/>
 </div>
