@@ -6,5 +6,3 @@
         goto('FlightsPage');
     })
 </script>
-
-<Loader/>
