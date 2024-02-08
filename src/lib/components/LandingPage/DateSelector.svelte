@@ -1,5 +1,6 @@
 <script>
-    import { getDate } from "$lib/utils/utils";
+    import AddSign from "$lib/images/AddSign.svelte";
+import { getDate } from "$lib/utils/utils";
     const {day,date,month} = getDate();
 </script>
 
@@ -18,7 +19,7 @@
                 <div class="text-xs font-light">and save more!</div>
             </div>
             <div class="my-auto">
-                icon
+                <AddSign/>
             </div>
         </div>
     </div>

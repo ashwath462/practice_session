@@ -1,16 +1,17 @@
-<script>
-
+<script lang="ts">
+    import RightArrow from '../../images/RightArrow.svelte';
+    import FrontArrow from '../../images/FrontArrow.svelte';
 </script>
 
 
 <div class="card bg-base-100 w-full cursor-pointer !rounded-md">
     <div class="flex justify-between p-2 max-w-[700px] min-w-[270px]">
         <div class="m-auto">
-            img
+            <slot/>
         </div>
         <div class="mx-2 w-3/4">
-            <div class="">
-                Bangalore -> Delhi
+            <div class="flex m-auto">
+                Bangalore <FrontArrow /> Delhi
             </div>
             <div class="text-xs font-light">
                 Sun, Dec-17 - Tue, Dec 19
@@ -20,7 +21,7 @@
             </div>
         </div>
         <div class="m-auto font-bold">
-            >
+            <RightArrow/>
         </div>
     </div>
 </div>

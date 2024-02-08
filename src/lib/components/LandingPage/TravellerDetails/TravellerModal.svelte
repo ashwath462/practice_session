@@ -1,5 +1,7 @@
 <script>
 	import SearchFlightButton from '../SearchFlightButton.svelte';
+	import Close from '$lib/images/Close.svelte';
+	import ModalBoundary from '$lib/images/ModalBoundary.svelte';
 	let adultTravellers = 1,
 		childrenTravellers = 0,
 		infantTravellers = 0;
@@ -7,15 +9,18 @@
 
 <dialog id="travelModal" class="modal modal-bottom">
 	<div class="modal-box p-0 m-0">
-		<div class="modal-action">
-			<form method="dialog">
-				<button class="btn">Close</button>
-			</form>
-		</div>
-
+		
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div class="flex flex-col mb-3">
-			<div class="text-xl font-bold px-4">Select Traveller(s)</div>
+			<div class="flex">
+				<div class="w-full flex place-items-center place-content-center ml-16"><ModalBoundary/></div>
+				<div class="modal-action mt-4 mx-4">
+					<form method="dialog">
+						<button ><Close/></button>
+					</form>
+				</div>
+			</div>
+			<div class="text-xl font-bold mx-4">Select Traveller(s)</div>
 			<div class="flex justify-between px-4 py-3">
 				<div>
 					<div class="font-bold">Adults</div>

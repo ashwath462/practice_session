@@ -15,4 +15,4 @@
       <span class="label-text cursor-pointer"> Show only non-stop flights</span> 
     </div>
   </div>
-<SearchFlightButton type="Search Flight"/>src/lib/components/FlightDetails.svelte
+<SearchFlightButton type="Search Flights"/>

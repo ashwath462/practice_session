@@ -1,5 +1,5 @@
 <script lang="ts">
-
+	import { cardType } from "$lib/utils/constants";
 </script>
 
 <div class="card p-4">

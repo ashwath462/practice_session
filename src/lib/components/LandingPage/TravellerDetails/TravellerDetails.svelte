@@ -1,5 +1,6 @@
 <script lang="ts">
-    import TravellerModal from "./TravellerModal.svelte";
+    import DownArrow from "$lib/images/DownArrow.svelte";
+import TravellerModal from "./TravellerModal.svelte";
 
     // @ts-ignore
     const showModal = ()=>document.getElementById('travelModal').showModal();
@@ -13,14 +14,14 @@
             <div class="text-xs font-light">Class</div>
             <div class="flex">
                 <div>Economy</div>
-                <div class="mx-8">arrow</div>
+                <div class="mx-8"><DownArrow/></div>
             </div>
         </div>
         <div class="w-1/2 border-l-2 pl-4 ">
             <div class="text-xs font-light">Traveller</div>
             <div class="flex">
                 <div>1</div>
-                <div class="mx-8">arrow</div>
+                <div class="mx-8"><DownArrow/></div>
             </div>
         </div>
     </div>

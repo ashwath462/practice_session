@@ -1,4 +1,5 @@
 <script>
+	import { cardType } from "$lib/utils/constants";
     import Border from "../common/Border.svelte";
     import SearchCards from "./SearchCards.svelte";
 </script>
@@ -11,5 +12,5 @@
 
 <Border/>
 <div class="mx-4 border-b-2">
-    <SearchCards/>
+    <SearchCards type={cardType.upcomingFlight}/>
 </div>
