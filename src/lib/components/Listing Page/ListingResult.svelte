@@ -1,6 +1,6 @@
 <script>
-	import Border from "../Common/Border.svelte";
-	import FlightResultCard from "./ListingCard.svelte";
+	import Border from "$lib/components/Common/Border.svelte";
+	import FlightResultCard from "$lib/components/Listing Page/ListingCard.svelte";
 </script>
 
 
