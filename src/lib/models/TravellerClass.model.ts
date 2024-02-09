@@ -1,6 +1,6 @@
 export class TravellerClass{
-    private key:string;
-    private value:string;
+    public key:string;
+    public value:string;
 
     constructor(key:string, value:string){
         this.key = key;

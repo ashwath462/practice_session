@@ -3,13 +3,13 @@ import { PassengerDetails } from "./PassengerDetails.model";
 import { TravellerClass } from "./TravellerClass.model";
 import { SortFilterList } from "./SortFilterList.model";
 export class FlightDetails{
-    private src:CityDetails;
-    private des:CityDetails;
-    private departDate:string;
-    private partnerCountry:string;
-    private passenger:PassengerDetails;
-    private travellers: TravellerClass;
-    private appliedSortFilter: SortFilterList;
+    public src:CityDetails;
+    public des:CityDetails;
+    public departDate:string;
+    public partnerCountry:string;
+    public passenger:PassengerDetails;
+    public travellers: TravellerClass;
+    public appliedSortFilter: SortFilterList;
     
     constructor(src:CityDetails, des:CityDetails, departDate:string, partnerCountry:string, passenger:PassengerDetails, travellers: TravellerClass, appliedSortFilter: SortFilterList){
         this.src = src;

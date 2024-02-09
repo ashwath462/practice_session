@@ -1,21 +1,13 @@
 export class CityDetails{
-    private iataCode:string;
-    private city:string;
-    private countryCode:string;
+    public iataCode:string;
+    public city:string;
+    public countryCode:string;
+    public name: string;
 
-    constructor(iataCode:string, city:string,countryCode:string){
+    constructor(iataCode:string, city:string, name:string, countryCode:string){
         this.iataCode = iataCode;
         this.city = city;
+        this.name = name;
         this.countryCode = countryCode;
     }
-
-    public getIataCode(){
-        return this.iataCode;
-    };
-    public getCity(){
-        return this.city;
-    };
-    public getCountryCode(){
-        return this.countryCode;
-    };
 }

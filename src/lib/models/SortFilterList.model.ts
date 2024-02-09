@@ -3,8 +3,8 @@ import { files } from "$service-worker";
 type typeOfAppliedFilterValueList = {filterValues:string[]};
 
 class FiltersList{
-    private filterId:number;
-    private appliedFilterValueList: typeOfAppliedFilterValueList;
+    public filterId:number;
+    public appliedFilterValueList: typeOfAppliedFilterValueList;
 
     constructor(filterId:number, appliedFilterValueList:typeOfAppliedFilterValueList){
         this.filterId = filterId;
@@ -21,9 +21,9 @@ class FiltersList{
 
 
 export class SortFilterList{
-    private tabId: string;
-    private sortId: string;
-    private filtersList: FiltersList;
+    public tabId: string;
+    public sortId: string;
+    public filtersList: FiltersList;
 
     constructor(tabId:string, sortId:string, filtersList: FiltersList){
         this.tabId = tabId;

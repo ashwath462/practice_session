@@ -1,4 +1,17 @@
 import { writable } from "svelte/store";
-import { FlightDetails } from "$lib/models/FlightDetails.model";
+import { getConfigData } from "./flights.api";
 
-export const flightDetails = writable(FlightDetails);
+
+let data:any;
+const flightDetailsStore = async() => {
+    data = await getConfigData();
+    console.log(data);
+    const { subscribe, set, update } = writable(data);
+    return {
+        subscribe,
+        set,
+        update
+    }
+}
+
+export const flightDetails = await flightDetailsStore();

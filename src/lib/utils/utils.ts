@@ -5,4 +5,3 @@ export const getDate = ()=>{
     const month = currentDate.toLocaleDateString('en-US', {month:'short'});
     return {day,date,month};
 }
-

@@ -14,7 +14,7 @@
 		<div class="w-1/2 cursor-pointer">
 			<div class="text-xs font-light">Departure</div>
             <Datepicker bind:store let:key let:send let:receive start={new Date()} end={endDate} theme={calendarStyles}>
-                <button  in:receive|local={{ key }} out:send|local={{ key }}>
+                <button in:receive|local={{ key }} out:send|local={{ key }}>
                         {dayjs($store?.selected).format('D MMM')}
                 </button>
             </Datepicker>

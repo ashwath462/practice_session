@@ -2,8 +2,9 @@
 	import { cardType } from "$lib/utils/constants";
 	import RecentSearchIcon from "$lib/images/RecentSearch.svelte";
     import LocationIcon from "$lib/images/Location.svelte";
-
-    export let type:cardType = cardType.recentSearch;
+	import type { CityDetails } from "$lib/models/CityDetails.model";
+    export let type:cardType = cardType.upcomingFlight;
+    export let city:CityDetails;
 </script>
 
 <div class="card w-5/6 max-w-[700px] cursor-pointer !rounded-md">
@@ -17,10 +18,10 @@
         </div>
         <div class="mx-2 w-5/6">
             <div class="">
-                Bangalore
+                {city.city}
             </div>
             <div class="text-xs font-light">
-                Sun, Dec-17 - Tue, Dec 19
+                {city.name}
             </div>
         </div>
     </div>

@@ -24,12 +24,12 @@ export const calendarStyles = {
         "border": "#eee"
         },
         "font": {
-        "regular": "1.5em",
-        "large": "37em"
+            "regular": "1.5em",
+            "large": "37em"
         },
         "grid": {
-        "disabledOpacity": ".35",
-        "outsiderOpacity": ".6"
+            "disabledOpacity": ".35",
+            "outsiderOpacity": ".6"
         }
     }
 }

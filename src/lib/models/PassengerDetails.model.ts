@@ -1,7 +1,7 @@
 export class PassengerDetails{
-    private adultCount:number;
-    private infantCount:number;
-    private childCount:number;
+    public adultCount:number;
+    public infantCount:number;
+    public childCount:number;
 
     constructor(adultCount:number, infantCount:number,childCount:number){
         this.adultCount = adultCount;
