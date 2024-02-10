@@ -1,10 +1,14 @@
-<script>
+<script lang="ts">
 	import SearchFlightButton from '../SearchFlightButton.svelte';
 	import Close from '$lib/images/Close.svelte';
 	import ModalBoundary from '$lib/images/ModalBoundary.svelte';
-	let adultTravellers = 1,
-		childrenTravellers = 0,
-		infantTravellers = 0;
+	import { flightDetails } from '$lib/store/FlightDetails.store';
+	import { onMount } from 'svelte';
+	import GuestDetails from './GuestDetails.svelte';
+	
+	$: travellerData = $flightDetails.guests;
+	$: totalGuest = $flightDetails.adultCount + $flightDetails.childCount + $flightDetails.infantCount;
+	let error:string = "" 
 </script>
 
 <dialog id="travelModal" class="modal modal-bottom">
@@ -18,72 +22,14 @@
 					<form method="dialog">
 						<button ><Close/></button>
 					</form>
-				</div>
+				</div> 
 			</div>
 			<div class="text-xl font-bold mx-4">Select Traveller(s)</div>
-			<div class="flex justify-between px-4 py-3">
-				<div>
-					<div class="font-bold">Adults</div>
-					<div class="text-xs font-light">12 years and above</div>
-				</div>
-				<div class="flex border">
-					<button
-						class="bg-white p-1 font-bold"
-						on:click={() => {
-							adultTravellers > 1 ? (adultTravellers -= 1) : adultTravellers;
-						}}>-</button
-					>
-					<p class="bg-white p-2 font-bold">{adultTravellers}</p>
-					<button
-						class="bg-white p-1 font-bold"
-						on:click={() => {
-							adultTravellers += 1;
-						}}>+</button
-					>
-				</div>
-			</div>
-			<div class="flex justify-between px-4 py-3">
-				<div>
-					<div class="font-bold">Children</div>
-					<div class="text-xs font-light">2 to 12 years</div>
-				</div>
-				<div class="flex border">
-					<button
-						class="bg-white p-1 font-bold"
-						on:click={() => {
-							childrenTravellers > 0 ? (childrenTravellers -= 1) : childrenTravellers;
-						}}>-</button
-					>
-					<p class="bg-white p-2 font-bold">{childrenTravellers}</p>
-					<button
-						class="bg-white p-1 font-bold"
-						on:click={() => {
-							childrenTravellers += 1;
-						}}>+</button
-					>
-				</div>
-			</div>
-			<div class="flex justify-between px-4 py-3">
-				<div>
-					<div class="font-bold">Infants</div>
-					<div class="text-xs font-light">Less than 2 years</div>
-				</div>
-				<div class="flex border">
-					<button
-						class="bg-white p-1 font-bold"
-						on:click={() => {
-							infantTravellers > 0 ? (infantTravellers -= 1) : infantTravellers;
-						}}>-</button
-					>
-					<p class="bg-white p-2 font-bold">{infantTravellers}</p>
-					<button
-						class="bg-white p-1 font-bold"
-						on:click={() => {
-							infantTravellers += 1;
-						}}>+</button
-					>
-				</div>
-			</div>
+				<GuestDetails guestData={travellerData[0]} bind:count={$flightDetails.adultCount} totalGuest={totalGuest} bind:error={error}/>
+				<GuestDetails guestData={travellerData[1]} bind:count={$flightDetails.childCount} totalGuest={totalGuest} bind:error={error}/>
+				<GuestDetails guestData={travellerData[2]} bind:count={$flightDetails.infantCount} totalGuest={totalGuest} bind:error={error}/>
+			<div class="px-4 text-sm text-red-500">{error}</div>
+			
 			<div class="flex flex-col px-4 py-3">
 				<div class="text-xl font-bold">Select Class</div>
 				<div class="flex p-1">
@@ -122,7 +68,12 @@
 				</div>
 				<div class="flex p-1">
 					<div class="m-2">
-						<input type="radio" name="radio-3" class="radio radio-sm radio-primary" value="First" />
+						<input 
+							type="radio" 
+							name="radio-3" 
+							class="radio radio-sm radio-primary" 
+							value="First"
+						/>
 					</div>
 					<div class="my-1">First Class</div>
 				</div>

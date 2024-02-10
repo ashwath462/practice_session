@@ -10,8 +10,8 @@ async function getData(url:string, body:object){
         },
         body: JSON.stringify(body)
     });
-    data = await data.json();
-    console.log(data);
+    data = await data?.json();
+    // console.log(data);
     return data;
 }
 

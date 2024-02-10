@@ -5,14 +5,22 @@
     import type { CityDetails } from "$lib/models/CityDetails.model";
     import { flightDetails } from "$lib/store/FlightDetails.store";
 	import { goto } from "$app/navigation";
+	import { cacheCity } from "$lib/store/flights.local";
     export let title:string;
     export let type:string;
     export let cities: CityDetails[];
+    export let error: string = "";
 
     const selectCity = (item:any)=>{
-        if(type === "source") $flightDetails.src = item;
-        else $flightDetails.des = item;
-        goto('/FlightsPage')
+        if(type === "source" && $flightDetails.des.city != item.city) $flightDetails.src = item;
+        else if(type === "destination" && $flightDetails.src.city != item.city) $flightDetails.des = item;
+        else {
+            error = 'Source and destination cannot be same';
+            return;
+        }
+        error = "";
+        cacheCity(item);
+        goto('/FlightsPage');
     }
 </script>
 

@@ -6,7 +6,7 @@
     import Plane from "$lib/images/DestSrcImg/Plane.svelte";
     import { flightDetails } from "$lib/store/FlightDetails.store";
 
-    console.log($flightDetails)
+    // console.log($flightDetails)
 
     const swapCityData = () => {
         let swappableData = $flightDetails.src;

@@ -2,7 +2,7 @@
   import DateSelector from "$lib/components/LandingPage/DateSelector.svelte";
   import TravellerDetails from "$lib/components/LandingPage/TravellerDetails/TravellerDetails.svelte";
   import SearchFlightButton from "$lib/components/LandingPage/SearchFlightButton.svelte";
-  import SourceDestinationSelector from "./LandingPage/SourceDestinationSelector.svelte";
+  import SourceDestinationSelector from "./SourceDestinationSelector.svelte";
 </script>
 
 

@@ -1,17 +1,30 @@
 <script lang="ts">
-    import { getSearchCityData } from '$lib/store/flights.api';
+    import { getPopularCitiesData, getSearchCityData } from '$lib/store/flights.api';
     import Search from "$lib/images/Search.svelte"
 	import SearchList from "./SearchList.svelte";
     import type { CityDetails } from "$lib/models/CityDetails.model";
 	import Close from '$lib/images/Close.svelte';
+	import { onMount } from 'svelte';
+	import { getCachedCities } from '$lib/store/flights.local';
     export let type:string;
-    let city = "", searchListItems:CityDetails[] = [];
+    let city = "", searchListItems:CityDetails[] = [], popularCities:CityDetails[] = [], recentSearchedCities:CityDetails[] = [];
+    let error:string = "";
     const handleInput = async()=>{
         const data = await getSearchCityData(city);
         console.log(data);
         searchListItems = data.airportList;
         console.log(searchListItems);
     }
+
+    onMount(async ()=>{
+        const data = await getPopularCitiesData();
+        popularCities = data?.airportList;
+        console.log(popularCities);
+
+        const localData = await getCachedCities();
+        recentSearchedCities = localData;
+        console.log(recentSearchedCities);
+    })
 </script>
 
 
@@ -30,12 +43,15 @@
             </div>
             {/if}
     </div>
+    <div class="mx-4 text-sm text-red-400">{error}</div>
     <div class="flex flex-col">
         {#if (searchListItems.length === 0)}
-            <SearchList type={type} title = "Recent Searches" cities={searchListItems}/>
-            <SearchList type={type} title = "Popular cities" cities={searchListItems}/>
+            {#if (recentSearchedCities.length>=1)}
+            <SearchList type={type} title = "Recent Searches" cities={recentSearchedCities} bind:error={error}/>
+            {/if}
+            <SearchList type={type} title = "Popular cities" cities={popularCities} bind:error={error}/>
         {:else}
-            <SearchList type={type} title = "Search cities" cities={searchListItems}/>
+            <SearchList type={type} title = "Search cities" cities={searchListItems} bind:error={error}/>
         {/if}
     </div>
 </div>
