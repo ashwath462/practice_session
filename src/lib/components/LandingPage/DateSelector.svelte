@@ -4,9 +4,13 @@
     import { addYears } from 'date-fns';
     import { Datepicker } from 'svelte-calendar';
 	import { calendarStyles } from '$lib/utils/constants';
+	import { onMount } from 'svelte';
+	import { flightDetails } from '$lib/store/FlightDetails.store';
     const endDate = addYears(new Date(), 1);
     let store:any;
     
+	$: $flightDetails.departDate = dayjs($store?.selected).format('DD-MM-YYYY');
+	// $: console.log($flightDetails.departDate);
 </script>
 
 <div class="card bg-base-100 px-2 m-4 rounded-sm">

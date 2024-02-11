@@ -4,10 +4,12 @@
     import BackArrow from '../../images/BackArrow.svelte';
     import Coupon from "$lib/images/Coupon.svelte";
 	import Wallet from "$lib/images/Wallet.svelte";
+	import ModifySearch from "$lib/images/ModifySearch.svelte";
 	import { goto } from "$app/navigation";
 	import FrontArrow from "$lib/images/FrontArrow.svelte";
     import { NavBarDetails } from "$lib/store/NavBar.store";
     import { flightDetails } from "$lib/store/FlightDetails.store";
+	import { travellClassValue } from "$lib/store/TravellClass.store";
     // @ts-ignore
     const showModal = ()=>document.getElementById('modifyFlightModal').showModal()
     $: navbarData = $NavBarDetails;
@@ -35,11 +37,11 @@
                     <div>{$flightDetails.des.city}</div>
                 </div>
                 <div class="text-sm flex">
-                    <div>Date</div>
+                    <div>{$flightDetails.departDate}</div>
                     <div class="mx-1">|</div>
-                    <div>Travller</div>
+                    <div>{$flightDetails.adultCount + $flightDetails.childCount + $flightDetails.infantCount} Traveller</div>
                     <div class="mx-1">|</div>
-                    <div>Class</div>
+                    <div>{$travellClassValue.value.split(' ')[0]}</div>
                 </div>
             </div>
         {/if}
@@ -54,7 +56,7 @@
         {:else if (navbarData.type === "SearchPage")}
             <div></div>
         {:else}
-        <div class="" on:click={()=>showModal()}><Wallet/></div>
+        <div class="" on:click={()=>showModal()}><ModifySearch/></div>
         {/if}
     </div>
 </div>

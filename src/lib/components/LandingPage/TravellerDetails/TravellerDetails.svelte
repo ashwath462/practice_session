@@ -2,7 +2,7 @@
     import DownArrow from "$lib/images/DownArrow.svelte";
     import TravellerModal from "./TravellerModal.svelte";
     import { flightDetails } from "$lib/store/FlightDetails.store";
-
+    import { travellClassValue } from "$lib/store/TravellClass.store";
     // @ts-ignore
     const showModal = ()=>document.getElementById('travelModal').showModal();
     $: data = $flightDetails;
@@ -16,7 +16,7 @@
         <div class="w-1/2">
             <div class="text-xs font-light">Class</div>
             <div class="flex">
-                <div>{data.travellerClass}</div>
+                <div>{$travellClassValue.value.split(' ')[0]}</div>
                 <div class="mx-8"><DownArrow/></div>
             </div>
         </div>
