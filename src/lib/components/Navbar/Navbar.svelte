@@ -11,7 +11,10 @@
     import { flightDetails } from "$lib/store/FlightDetails.store";
 	import { travellClassValue } from "$lib/store/TravellClass.store";
     // @ts-ignore
-    const showModal = ()=>document.getElementById('modifyFlightModal').showModal()
+    const showModal = ()=>{
+        $NavBarDetails.redirected = 'modal';
+        document.getElementById('modifyFlightModal').showModal();
+    }
     $: navbarData = $NavBarDetails;
 </script>
 

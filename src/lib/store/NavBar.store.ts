@@ -2,10 +2,11 @@ import { writable } from "svelte/store";
 
 
 let data:any;
-const NavBarStore = async() => {
+const NavBarStore = () => {
     const { subscribe, set, update } = writable({
         type: "LandingPage",
-        leftContent: "Flights"
+        leftContent: "Flights",
+        redirected:""
     });
     return {
         subscribe,
@@ -14,4 +15,4 @@ const NavBarStore = async() => {
     }
 }
 
-export const NavBarDetails = await NavBarStore();
+export const NavBarDetails = NavBarStore();

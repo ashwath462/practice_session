@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-const flightResultsStore = async() => {
+const flightResultsStore = () => {
     const { subscribe, set, update } = writable([]);
     return {
         subscribe,
@@ -9,4 +9,4 @@ const flightResultsStore = async() => {
     }
 }
 
-export const flightResults = await flightResultsStore();
+export const flightResults = flightResultsStore();

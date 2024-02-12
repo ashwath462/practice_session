@@ -4,41 +4,51 @@
 	import { flightResults } from "$lib/store/FlightResults.store";
 	import { travellClassValue } from "$lib/store/TravellClass.store";
     import { searchFlight } from "$lib/store/flights.api";
+	import { cacheSearchFlight } from "$lib/store/flights.local";
     export let type:string;
-
+    let loading:boolean = false;
+    
     const handleClick = async ()=>{
-        const passengerDetails = {
-            adultCount: $flightDetails.adultCount,
-            infantCount: $flightDetails.infantCount,
-            childCount: $flightDetails.childCount
-        };
-            
-        const body = {
-            src: $flightDetails.src,
-            des: $flightDetails.des,
-            departDate: $flightDetails.departDate,
-            partnerCountry: $flightDetails.partnerCountry,
-            passenger: passengerDetails,
-            travellerClass:{
-                key: $travellClassValue.key,
-                value: $travellClassValue.value,
-            },
-            appliedSortFilter: $flightDetails.defaultSortFilter
+        const data = $flightDetails;
+        const travellDetails = $travellClassValue;
+        if(loading == false){
+            loading = true;
+            const passengerDetails = {
+                adultCount: data.adultCount,
+                infantCount: data.infantCount,
+                childCount: data.childCount
+            };
+                
+            const body = {
+                src: data.src,
+                des: data.des,
+                departDate: data.departDate,
+                partnerCountry: data.partnerCountry,
+                passenger: passengerDetails,
+                travellerClass:{
+                    key: travellDetails.key,
+                    value: travellDetails.value,
+                },
+                appliedSortFilter: data.defaultSortFilter
+            }
+            console.log(body);
+            const result = await searchFlight(body);
+            cacheSearchFlight(body);
+            $flightResults = result.onwardFlights;
+            console.log(result.onwardFlights);
+            loading = false;
+            goto('/ListingPage')
         }
-        console.log(body);
-
-        const result = await searchFlight(body);
-        $flightResults = result.onwardFlights;
-        console.log(result.onwardFlights);
-        goto('/ListingPage')
     }
 </script>
 
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:click={()=>{handleClick()}} class="mx-3 flex justify-center">
-    <div class="btn btn-block btn-info text-white font-bold text-lg">
-        {type}
-    </div>
+<div class="flex justify-center w-full">
+    <button class="mx-3 text-center w-full">
+        <div on:click={()=>{handleClick()}} class:btn-disabled={loading} class="btn btn-block btn-info text-white font-bold text-lg">
+            {type}
+        </div>
+    </button>
 </div>

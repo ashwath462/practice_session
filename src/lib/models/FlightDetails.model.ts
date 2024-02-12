@@ -8,17 +8,24 @@ export class FlightDetails{
     public departDate:string;
     public partnerCountry:string;
     public passenger:PassengerDetails;
-    public travellers: TravellerClass;
+    public travellerClass: TravellerClass;
     public appliedSortFilter: SortFilterList;
+    public adultCount:number;
+    public infantCount:number;
+    public childCount:number;
+    public defaultSortFilter:any;
     
-    constructor(src:CityDetails, des:CityDetails, departDate:string, partnerCountry:string, passenger:PassengerDetails, travellers: TravellerClass, appliedSortFilter: SortFilterList){
+    constructor(src:CityDetails, des:CityDetails, departDate:string, partnerCountry:string, passenger:PassengerDetails, travellers: TravellerClass, appliedSortFilter: SortFilterList, childCount:number, adultCount:number, infantCount:number){
         this.src = src;
         this.des = des;
         this.departDate = departDate;
         this.partnerCountry = partnerCountry;
         this.passenger = passenger;
-        this.travellers = travellers;
+        this.travellerClass = travellers;
         this.appliedSortFilter = appliedSortFilter;
+        this.adultCount = adultCount;
+        this.childCount = childCount;
+        this.infantCount = infantCount;
     }
 
 
@@ -39,7 +46,7 @@ export class FlightDetails{
         return this.passenger;
     }
     public getTravellerClass(){
-        return this.travellers;
+        return this.travellerClass;
     }
     public getAppliedSortFilter(){
         return this.appliedSortFilter;
@@ -61,7 +68,7 @@ export class FlightDetails{
         return this.passenger = passenger;
     }
     public setTravellerClass(travellers:TravellerClass){
-        return this.travellers = travellers;
+        return this.travellerClass = travellers;
     }
     public setAppliedSortFilter(appliedSortFilter:SortFilterList){
         return this.appliedSortFilter = appliedSortFilter;

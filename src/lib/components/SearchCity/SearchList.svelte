@@ -6,6 +6,7 @@
     import { flightDetails } from "$lib/store/FlightDetails.store";
 	import { goto } from "$app/navigation";
 	import { cacheCity } from "$lib/store/flights.local";
+	import { NavBarDetails } from "$lib/store/NavBar.store";
     export let title:string;
     export let type:string;
     export let cities: CityDetails[];
@@ -20,7 +21,8 @@
         }
         error = "";
         cacheCity(item);
-        goto('/FlightsPage');
+        if($NavBarDetails.redirected === 'modal') goto('/ListingPage')
+        else goto('/FlightsPage');
     }
 </script>
 

@@ -5,9 +5,13 @@
 	import SourceDestinationSelector from "../LandingPage/SourceDestinationSelector.svelte";
 	import Close from "$lib/images/Close.svelte";
 	import ModalBoundary from "$lib/images/ModalBoundary.svelte";
+	import { NavBarDetails } from "$lib/store/NavBar.store";
 
     // @ts-ignore
-    const closeModal = ()=>document.getElementById('modifyFlightModal').close();
+    const closeModal = async ()=>{
+        $NavBarDetails.redirected = '';
+        document.getElementById('modifyFlightModal').close();
+    }
 </script>
 
 

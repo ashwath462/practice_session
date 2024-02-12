@@ -7,8 +7,6 @@ export const getDate = ()=>{
     const month = currentDate.toLocaleDateString('en-US', {month:'short'});
     return {day,date,month};
 }
-// →
-
 
 export const validateTravellers = (guest:number,min:number, max:number, totalGuest:number, increase:boolean = true)=>{
     if(increase){

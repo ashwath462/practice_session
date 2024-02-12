@@ -5,20 +5,22 @@
     import RecentSearch from "$lib/images/RecentSearch.svelte";
 	import { getUpcomingFlightData } from "$lib/store/flights.api";
 	import { onMount } from "svelte";
+	import { getCachedSearchFlight } from "$lib/store/flights.local";
     export let type:cardType = cardType.recentSearch;
     export let title:string = "Recent Searches";
 
     let cardData:any[] = [];
     onMount(async()=>{
+        // localStorage.removeItem('searchedFlights');
         if(type === cardType.recentSearch){
+            const data = await getCachedSearchFlight();
+            cardData = data;
+        } 
+        else{
             const data = await getUpcomingFlightData();
             cardData = data.booking;
-            // console.log(cardData);
-        } else{
-            const data = await getUpcomingFlightData();
-            cardData = data.booking;
-            // console.log(cardData);
         }
+        console.log(cardData);
     })
 </script>
 

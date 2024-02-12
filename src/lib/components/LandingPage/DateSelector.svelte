@@ -10,6 +10,10 @@
     let store:any;
     
 	$: $flightDetails.departDate = dayjs($store?.selected).format('DD-MM-YYYY');
+
+	onMount(()=>{
+		$flightDetails.departDate = dayjs($store?.selected).format('DD-MM-YYYY');
+	})
 	// $: console.log($flightDetails.departDate);
 </script>
 

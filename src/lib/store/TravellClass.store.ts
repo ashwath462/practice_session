@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-const travellClassStore = async() => {
+const travellClassStore = () => {
     const data = {key:"", value:""};
     const { subscribe, set, update } = writable(data);
     return {
@@ -10,4 +10,4 @@ const travellClassStore = async() => {
     }
 }
 
-export const travellClassValue = await travellClassStore();
+export const travellClassValue =  travellClassStore();
