@@ -11,7 +11,6 @@
 
     let cardData:any[] = [];
     onMount(async()=>{
-        // localStorage.removeItem('searchedFlights');
         if(type === cardType.recentSearch){
             const data = await getCachedSearchFlight();
             cardData = data;

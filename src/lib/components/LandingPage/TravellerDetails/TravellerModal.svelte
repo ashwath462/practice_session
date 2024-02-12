@@ -7,6 +7,7 @@
 	import GuestDetails from './GuestDetails.svelte';
 	import TravellClassSelector from './TravellClassSelector.svelte';
 	import { travellClassValue } from '$lib/store/TravellClass.store';
+	import Error from '$lib/components/common/Error.svelte';
 	
 	$: travellerData = $flightDetails.guests;
 	$: totalGuest = $flightDetails.adultCount + $flightDetails.childCount + $flightDetails.infantCount;
@@ -21,7 +22,6 @@
 
 <dialog id="travelModal" class="modal modal-bottom">
 	<div class="modal-box p-0 m-0">
-		
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div class="flex flex-col mb-3">
 			<div class="flex">
@@ -36,7 +36,7 @@
 				<GuestDetails guestData={travellerData[0]} bind:count={$flightDetails.adultCount} totalGuest={totalGuest} bind:error={error}/>
 				<GuestDetails guestData={travellerData[1]} bind:count={$flightDetails.childCount} totalGuest={totalGuest} bind:error={error}/>
 				<GuestDetails guestData={travellerData[2]} bind:count={$flightDetails.infantCount} totalGuest={totalGuest} bind:error={error}/>
-			<div class="px-4 text-sm text-red-500">{error}</div>
+			<!-- <div class="px-4 text-sm text-red-500">{error}</div> -->
 			
 			<div class="flex flex-col px-4 py-3">
 				<div class="text-xl font-bold">Select Class</div>
@@ -45,6 +45,9 @@
 				{/each}
 			</div>
             <!-- svelte-ignore a11y-click-events-have-key-events -->
+			{#if error.length>0}
+				<Error bind:error={error}/>
+			{/if}
             <div class="flex justify-center">
                 <form method="dialog" class="w-[100vw]">
                     <button class="w-full">

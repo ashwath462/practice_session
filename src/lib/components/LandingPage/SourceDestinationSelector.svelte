@@ -1,14 +1,29 @@
 <script>
-	import { goto } from "$app/navigation";
+// @ts-nocheck
     import Swap from "$lib/images/Swap.svelte";
     import Circle from "$lib/images/DestSrcImg/Circle.svelte";
     import Line from "$lib/images/DestSrcImg/Line.svelte";
     import Plane from "$lib/images/DestSrcImg/Plane.svelte";
     import { flightDetails } from "$lib/store/FlightDetails.store";
+    import { tweened } from 'svelte/motion';
 
+	import CityCard from "./CityCard.svelte";
+	import Border from "../common/Border.svelte";
+
+    let isSwapped = false;
+
+    let rotation = tweened(0);
+
+    function handleClick() {
+        rotation.set($rotation-180);
+    }
     // console.log($flightDetails)
 
+    
+
     const swapCityData = () => {
+        handleClick();
+        isSwapped = !isSwapped;
         let swappableData = $flightDetails.src;
         $flightDetails.src = $flightDetails.des;
         $flightDetails.des = swappableData;
@@ -25,18 +40,20 @@
             <Line/>
             <Plane/>
         </div>
-        <div class="w-11/12 flex flex-col cursor-pointer">
-            <div on:click={()=>{goto('SearchPage/source')}} class="flex my-auto py-2 border-b-2 border-dashed border-gray-400">
-                <div class="border text-xs my-auto px-2 ">{$flightDetails.src.iataCode}</div>
-                <div class="mx-2 font-bold">{$flightDetails.src.city}</div>
-            </div>
-            <div on:click={()=>{goto('SearchPage/destination')}} class="flex my-auto py-2">
-                <div class="border text-xs my-auto px-2">{$flightDetails.des.iataCode}</div>
-                <div class="mx-2 font-bold">{$flightDetails.des.city}</div>
-            </div>
+        <div class="w-11/12 flex flex-col cursor-pointer" >
+            <CityCard cityData={[$flightDetails.src]} type="source"/>
+            <Border/>
+            <CityCard cityData={[$flightDetails.des]} type="destination"/>
         </div>
-        <div class="my-auto mx-4 cursor-pointer" on:click={()=>swapCityData()}>
+        <div class="my-auto mx-4 cursor-pointer icon " style="transform: rotate({$rotation}deg);" on:click={()=>swapCityData()}>
             <Swap/>
         </div>
     </div>
 </div>
+
+<style>
+    .icon {
+        transition: transform 0.1s ease-out;
+    }
+</style>
+

@@ -21,7 +21,7 @@ export const cacheCity = (data:CityDetails)=>{
     localStorage.setItem('searchedCities', JSON.stringify(existingData));
 }
 
-export const getCachedSearchFlight:any = ()=>{
+export const getCachedSearchFlight = ()=>{
     const data = localStorage.getItem('searchedFlights');
     if(data != null){
         let cachedData:[] = JSON.parse(data);
@@ -30,7 +30,7 @@ export const getCachedSearchFlight:any = ()=>{
     return [];
 }
 
-export const cacheSearchFlight = (body:any)=>{
+export const cacheSearchFlight = (body)=>{
     const title = `${body.src.city} → ${body.des.city}`;
     console.log(body.departDate);
     const subtitle = `${dayjs(body.departDate, 'DD-MM-YYYY').format('ddd,D MMM')}`

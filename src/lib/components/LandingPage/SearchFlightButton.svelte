@@ -9,35 +9,37 @@
     let loading:boolean = false;
     
     const handleClick = async ()=>{
-        const data = $flightDetails;
-        const travellDetails = $travellClassValue;
-        if(loading == false){
-            loading = true;
-            const passengerDetails = {
-                adultCount: data.adultCount,
-                infantCount: data.infantCount,
-                childCount: data.childCount
-            };
-                
-            const body = {
-                src: data.src,
-                des: data.des,
-                departDate: data.departDate,
-                partnerCountry: data.partnerCountry,
-                passenger: passengerDetails,
-                travellerClass:{
-                    key: travellDetails.key,
-                    value: travellDetails.value,
-                },
-                appliedSortFilter: data.defaultSortFilter
+        if(type!="Proceed"){
+            const data = $flightDetails;
+            const travellDetails = $travellClassValue;
+            if(loading == false){
+                loading = true;
+                const passengerDetails = {
+                    adultCount: data.adultCount,
+                    infantCount: data.infantCount,
+                    childCount: data.childCount
+                };
+                    
+                const body = {
+                    src: data.src,
+                    des: data.des,
+                    departDate: data.departDate,
+                    partnerCountry: data.partnerCountry,
+                    passenger: passengerDetails,
+                    travellerClass:{
+                        key: travellDetails.key,
+                        value: travellDetails.value,
+                    },
+                    appliedSortFilter: data.defaultSortFilter
+                }
+                console.log(body);
+                const result = await searchFlight(body);
+                cacheSearchFlight(body);
+                $flightResults = result.onwardFlights;
+                console.log(result.onwardFlights);
+                loading = false;
+                goto('/ListingPage')
             }
-            console.log(body);
-            const result = await searchFlight(body);
-            cacheSearchFlight(body);
-            $flightResults = result.onwardFlights;
-            console.log(result.onwardFlights);
-            loading = false;
-            goto('/ListingPage')
         }
     }
 </script>
