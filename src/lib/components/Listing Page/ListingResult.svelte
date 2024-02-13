@@ -11,13 +11,13 @@
     let loading = true;
     onMount(()=>{
         if($NavBarDetails.redirected === 'modal'){
+            // @ts-ignore
             document.getElementById('modifyFlightModal').showModal();
-            
         }
         setTimeout(()=>{
             loading = false;
-        },3000);
-        console.log(resultCard);
+        },5000);
+        // console.log(resultCard);
     })
 </script>
 
