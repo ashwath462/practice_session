@@ -11,19 +11,15 @@
     let error:string = "";
     const handleInput = async()=>{
         const data = await getSearchCityData(city);
-        console.log(data);
         searchListItems = data.airportList;
-        console.log(searchListItems);
     }
 
     onMount(async ()=>{
         const data = await getPopularCitiesData();
         popularCities = data?.airportList;
-        console.log(popularCities);
 
         const localData = await getCachedCities();
         recentSearchedCities = localData;
-        console.log(recentSearchedCities);
     })
 </script>
 

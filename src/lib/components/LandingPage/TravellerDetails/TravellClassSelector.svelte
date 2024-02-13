@@ -1,7 +1,6 @@
 <script lang="ts">
     export let data:{key:string, value:string};
     export let travellClassValue:{key:string, value:string}
-    console.log(travellClassValue, data);
 </script>
 
 <div class="flex p-1">

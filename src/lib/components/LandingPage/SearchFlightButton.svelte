@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {get} from 'svelte/store';
 	import { goto } from "$app/navigation";
     import { flightDetails } from "$lib/store/FlightDetails.store";
 	import { flightResults } from "$lib/store/FlightResults.store";
@@ -10,8 +11,10 @@
     
     const handleClick = async ()=>{
         if(type!="Proceed"){
-            const data = $flightDetails;
-            const travellDetails = $travellClassValue;
+            $flightResults = [];
+            goto('/ListingPage');
+            const data = get(flightDetails);
+            const travellDetails = get(travellClassValue);
             if(loading == false){
                 loading = true;
                 const passengerDetails = {
@@ -38,7 +41,6 @@
                 $flightResults = result.onwardFlights;
                 console.log(result.onwardFlights);
                 loading = false;
-                goto('/ListingPage')
             }
         }
     }

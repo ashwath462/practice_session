@@ -10,6 +10,7 @@
     // @ts-ignore
     const closeModal = async ()=>{
         $NavBarDetails.redirected = '';
+        // @ts-ignore
         document.getElementById('modifyFlightModal').close();
     }
 </script>

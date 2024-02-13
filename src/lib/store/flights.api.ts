@@ -1,4 +1,4 @@
-import { CityDetails } from "$lib/models/CityDetails.model";
+import type { CityDetails } from "$lib/models/CityDetails.model";
 import { flightDetails } from "./FlightDetails.store";
 
 

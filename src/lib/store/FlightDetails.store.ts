@@ -1,15 +1,15 @@
 import { writable } from "svelte/store";
 import { getConfigData } from "./flights.api";
-import type { FlightDetails } from "$lib/models/FlightDetails.model";
+import type { FlightDetailsModel } from "$lib/models/FlightDetails.model";
 
 const flightDetailsStore = () => {
-    const { subscribe, set, update } = writable<FlightDetails>();
+    const { subscribe, set, update } = writable<FlightDetailsModel>();
     return {
         subscribe,
         set,
         update,
         fetchCongfig: async()=>{
-            let data:FlightDetails;
+            let data:FlightDetailsModel;
             data = await getConfigData();
             set(data);
         }
