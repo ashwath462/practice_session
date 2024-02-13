@@ -1,5 +1,5 @@
 import type { CityDetails } from "$lib/models/CityDetails.model"
-import type { FlightDetails } from "$lib/models/FlightDetails.model";
+import type { FlightDetailsModel } from "$lib/models/FlightDetails.model";
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
@@ -30,18 +30,18 @@ export const getCachedSearchFlight = ()=>{
     return [];
 }
 
-export const cacheSearchFlight = (body)=>{
+export const cacheSearchFlight = (body:any)=>{
     const title = `${body.src.city} → ${body.des.city}`;
     console.log(body.departDate);
     const subtitle = `${dayjs(body.departDate, 'DD-MM-YYYY').format('ddd,D MMM')}`
     const thirdTitle = `${body.passenger.adultCount + body.passenger.childCount + body.passenger.infantCount} Traveller | ${body.travellerClass.value.split(' ')[0]}`
-    const data = {
+    const data:any = {
         title:title,
         subtitle:subtitle,
         thirdTitle:thirdTitle,
         body:body
     }
-    let existingData = getCachedSearchFlight();
+    let existingData:any = getCachedSearchFlight();
     existingData = existingData.filter((item:any)=>{return ((item.title != data.title) || (item.subtitle != data.subtitle) || (item.thirdTitle != data.thirdTitle))});
     existingData = [data, ...existingData];
     existingData = existingData.slice(0,5);

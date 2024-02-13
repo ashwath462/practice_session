@@ -6,6 +6,7 @@
 	import { travellClassValue } from "$lib/store/TravellClass.store";
     import { searchFlight } from "$lib/store/flights.api";
 	import { cacheSearchFlight } from "$lib/store/flights.local";
+	import type { FlightDetailsModel } from '$lib/models/FlightDetails.model';
     export let type:string;
     let loading:boolean = false;
     

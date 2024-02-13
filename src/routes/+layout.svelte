@@ -16,7 +16,6 @@
 {#if loading}
 	<div class="flex h-screen justify-center items-center">
 		<Loader/>
-
 	</div>
 {:else}
 	<div class="bg-slate-200 min-h-[100vh]">

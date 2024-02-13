@@ -8,7 +8,6 @@
     $NavBarDetails.type = "LandingPage";
     $NavBarDetails.redirected = '';
 
-    export let localStorage:FlightDetailsModel;
 </script>
 
 

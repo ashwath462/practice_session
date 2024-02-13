@@ -1,8 +1,8 @@
 <script lang="ts">
     import RightArrow from '../../images/RightArrow.svelte';
     import FrontArrow from '../../images/FrontArrow.svelte';
-
-    export let data:any;
+    import type { CardDetails } from '$lib/models/CardDetails.model';
+    export let data:CardDetails;
 </script>
 
 
