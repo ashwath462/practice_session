@@ -36,3 +36,5 @@ export const calendarStyles = {
 
 export const MIN_TOTAL_GUEST = 1;
 export const MAX_TOTAL_GUEST = 9;
+
+export const DATE_FORMAT = 'DD-MM-YYYY';

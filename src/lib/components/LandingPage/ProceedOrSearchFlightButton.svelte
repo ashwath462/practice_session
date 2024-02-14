@@ -12,7 +12,7 @@
     
     const handleClick = async ()=>{
         if(type!="Proceed"){
-            $flightResults = [];
+            $flightResults = null;
             goto('/ListingPage');
             const data = get(flightDetails);
             const travellDetails = get(travellClassValue);

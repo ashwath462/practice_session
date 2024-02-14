@@ -3,6 +3,7 @@
     import { goto } from "$app/navigation";
     import { crossfade } from 'svelte/transition';
     import { flip } from 'svelte/animate';
+    
     export let cityData:CityDetails[] = [];
     export let type:('source'|'destination');
 

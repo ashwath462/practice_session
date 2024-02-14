@@ -3,4 +3,5 @@ export interface CityDetails {
     city: string;
     countryCode: string;
     name: string;
+    iconUrl: string;
 }

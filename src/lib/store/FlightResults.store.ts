@@ -9,4 +9,4 @@ const flightResultsStore = () => {
     }
 }
 
-export const flightResults = flightResultsStore();
+export const flightResults:any = flightResultsStore();

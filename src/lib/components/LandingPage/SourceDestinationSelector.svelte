@@ -6,9 +6,8 @@
     import Plane from "$lib/images/DestSrcImg/Plane.svelte";
     import { flightDetails } from "$lib/store/FlightDetails.store";
     import { tweened } from 'svelte/motion';
-
 	import CityCard from "./CityCard.svelte";
-	import Border from "../common/Border.svelte";
+	import Divider from "../common/Divider.svelte";
 
     let isSwapped = false;
 
@@ -42,7 +41,7 @@
         </div>
         <div class="w-11/12 flex flex-col cursor-pointer" >
             <CityCard cityData={[$flightDetails.src]} type="source"/>
-            <Border/>
+            <Divider/>
             <CityCard cityData={[$flightDetails.des]} type="destination"/>
         </div>
         <div class="my-auto mx-4 cursor-pointer icon " style="transform: rotate({$rotation}deg);" on:click={()=>swapCityData()}>

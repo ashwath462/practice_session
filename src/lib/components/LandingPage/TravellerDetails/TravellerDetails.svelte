@@ -7,6 +7,7 @@
     const showModal = ()=>document.getElementById('travelModal').showModal();
     $: data = $flightDetails;
     $: travellersCount = data.adultCount + data.childCount + data.infantCount;
+    $: travellClass = $travellClassValue.value.split(' ')[0];
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -16,7 +17,11 @@
         <div class="w-1/2">
             <div class="text-xs font-light">Class</div>
             <div class="flex">
-                <div>{$travellClassValue.value.split(' ')[0]}</div>
+                {#if travellClass}
+                    <div>{travellClass}</div>
+                {:else}
+                    <div>-</div>
+                {/if}
                 <div class="mx-8"><DownArrow/></div>
             </div>
         </div>

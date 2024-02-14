@@ -2,11 +2,11 @@
 	import { flightDetails } from "$lib/store/FlightDetails.store";
     import { validateTravellers } from "$lib/utils/utils";
     import type {GuestType} from "$lib/models/GuestDetails.model";
+
     export let guestData:GuestType;
     export let count:number;
     export let totalGuest:number;
     export let error:string;
-
     const increaseCount = ()=>{
         const validate = validateTravellers(count, guestData.minValue, guestData.maxValue, totalGuest)
         if(validate){

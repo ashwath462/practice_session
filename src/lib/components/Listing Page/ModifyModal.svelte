@@ -1,7 +1,7 @@
 <script lang="ts">
     import DateSelector from "../LandingPage/DateSelector.svelte";
     import TravellerDetails from "../LandingPage/TravellerDetails/TravellerDetails.svelte";
-    import SearchFlightButton from "../LandingPage/SearchFlightButton.svelte";
+    import SearchFlightButton from "../LandingPage/ProceedOrSearchFlightButton.svelte";
 	import SourceDestinationSelector from "../LandingPage/SourceDestinationSelector.svelte";
 	import Close from "$lib/images/Close.svelte";
 	import ModalBoundary from "$lib/images/ModalBoundary.svelte";

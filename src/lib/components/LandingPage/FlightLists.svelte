@@ -7,6 +7,7 @@
 	import { onMount } from "svelte";
 	import { getCachedSearchFlight } from "$lib/store/flights.local";
 	import type { CardDetails } from "$lib/models/CardDetails.model";
+    
     export let type:cardType = cardType.recentSearch;
     export let title:string = "Recent Searches";
 

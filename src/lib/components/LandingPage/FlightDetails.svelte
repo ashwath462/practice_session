@@ -1,7 +1,7 @@
 <script lang="ts">
   import DateSelector from "$lib/components/LandingPage/DateSelector.svelte";
   import TravellerDetails from "$lib/components/LandingPage/TravellerDetails/TravellerDetails.svelte";
-  import SearchFlightButton from "$lib/components/LandingPage/SearchFlightButton.svelte";
+  import SearchFlightButton from "$lib/components/LandingPage/ProceedOrSearchFlightButton.svelte";
   import SourceDestinationSelector from "./SourceDestinationSelector.svelte";
   import { NavBarDetails } from "$lib/store/NavBar.store";
 
@@ -9,7 +9,7 @@
   const closeModal = async ()=>{
     $NavBarDetails.redirected = '';
     // @ts-ignore
-    document.getElementById('modifyFlightModal').close();
+    document.getElementById('modifyFlightModal')?.close();
   }
 </script>
 

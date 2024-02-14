@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cardType } from "$lib/utils/constants";
-    import Border from "../common/Border.svelte";
+    import Divider from "../common/Divider.svelte";
     import SearchCards from "./SearchCards.svelte";
     import type { CityDetails } from "$lib/models/CityDetails.model";
     import { flightDetails } from "$lib/store/FlightDetails.store";
@@ -35,7 +35,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 {#each cities as city}
-    <Border/>
+    <Divider/>
     <div class="mx-4 border-b-2" on:click={()=>{selectCity(city)}}>
         <SearchCards city={city}/>
     </div>

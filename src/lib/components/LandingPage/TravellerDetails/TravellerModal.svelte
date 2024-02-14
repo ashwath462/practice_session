@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SearchFlightButton from '../SearchFlightButton.svelte';
+	import SearchFlightButton from '../ProceedOrSearchFlightButton.svelte';
 	import Close from '$lib/images/Close.svelte';
 	import ModalBoundary from '$lib/images/ModalBoundary.svelte';
 	import { flightDetails } from '$lib/store/FlightDetails.store';

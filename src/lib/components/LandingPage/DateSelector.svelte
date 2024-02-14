@@ -3,16 +3,16 @@
     import dayjs from 'dayjs';
     import { addYears } from 'date-fns';
     import { Datepicker } from 'svelte-calendar';
-	import { calendarStyles } from '$lib/utils/constants';
+	import { DATE_FORMAT, calendarStyles } from '$lib/utils/constants';
 	import { onMount } from 'svelte';
 	import { flightDetails } from '$lib/store/FlightDetails.store';
     const endDate = addYears(new Date(), 1);
     let store:any;
     
-	$: $flightDetails.departDate = dayjs($store?.selected).format('DD-MM-YYYY');
+	$: $flightDetails.departDate = dayjs($store?.selected).format(DATE_FORMAT);
 
 	onMount(()=>{
-		$flightDetails.departDate = dayjs($store?.selected).format('DD-MM-YYYY');
+		$flightDetails.departDate = dayjs($store?.selected).format(DATE_FORMAT);
 	})
 	// $: console.log($flightDetails.departDate);
 </script>

@@ -2,6 +2,7 @@
     import RightArrow from '../../images/RightArrow.svelte';
     import FrontArrow from '../../images/FrontArrow.svelte';
     import type { CardDetails } from '$lib/models/CardDetails.model';
+    
     export let data:CardDetails;
 </script>
 
