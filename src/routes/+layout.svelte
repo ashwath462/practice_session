@@ -1,31 +1,32 @@
 <script>
-    import "../app.css";
-    import Navbar from "$lib/components/Navbar/Navbar.svelte";
-    import Footer from "$lib/components/Footer/Footer.svelte";
-	import { onMount } from "svelte";
-	import { flightDetails } from "$lib/store/FlightDetails.store";
-	import Loader from '$lib/components/common/Loader.svelte'
+	import '../app.css';
+	import Navbar from '$lib/components/Navbar/Navbar.svelte';
+	import Footer from '$lib/components/Footer/Footer.svelte';
+	import { onMount } from 'svelte';
+	import { flightDetails } from '$lib/store/FlightDetails.store';
+	import Loader from '$lib/components/common/Loader.svelte';
 
 	let loading = true;
-	onMount(async()=>{
+	onMount(async () => {
 		await flightDetails.fetchCongfig();
 		loading = false;
-	})
+	});
 </script>
 
 {#if loading}
 	<div class="flex h-screen justify-center items-center">
-		<Loader/>
+		<Loader />
 	</div>
 {:else}
 	<div class="bg-slate-200 min-h-[100vh]">
-		<Navbar/>
+		<Navbar />
 		<div class="pb-12">
 			<slot />
 		</div>
-		<Footer/>
+		<Footer />
 	</div>
 {/if}
+
 <style>
 	:global(html) {
 		font-size: 10px;
